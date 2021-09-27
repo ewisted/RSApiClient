@@ -1,0 +1,92 @@
+name: CI Build
+
+
+on:
+  push:
+    branches:
+      - develop
+      - ci-improvements
+
+env:
+  MAJOR: 1
+  MINOR: 0
+  PATCH: 0
+
+jobs:
+  # Run tests.
+  # See also https://docs.docker.com/docker-hub/builds/automated-testing/
+  build:
+    runs-on: ubuntu-latest
+    env:
+      NUGET_PACKAGES: ${{ github.workspace }}/.nuget/packages
+
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Echo Github Actions Value
+        run: echo "${GITHUB_ACTIONS}"
+
+      - name: Setup .NET 6
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 6.0
+          source-url: https://www.myget.org/F/rsapiclient/api/v3/index.json
+        env:
+          NUGET_AUTH_TOKEN: ${{secrets.MYGET_TOKEN}}
+
+      - uses: actions/cache@v1
+        with:
+          path: ${{ github.workspace }}/.nuget/packages
+          key: ${{ runner.os }}-nuget-cache2-${{ hashFiles('**/packages.lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-cache2-
+      - name: Install dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+
+      - name: Pack
+        run: |
+          # Set version
+          VERSION=$(echo "${MAJOR}.${MINOR}.${PATCH}-build${GITHUB_RUN_NUMBER}")
+          echo "::set-output name=BUILD_VERSION::$VERSION"
+          
+          # pack
+          dotnet pack -p:Version=$VERSION --no-restore -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg -p:ContinuousIntegrationBuild=true --include-source --include-symbols --verbosity normal --output output
+      - name: Run Tests and Generate Coverage Report
+        run: dotnet test ${{ github.workspace }}/RsApiClient.UnitTests --collect:"XPlat Code Coverage" /p:DeterministicSourcePaths=true --settings runsettings.xml --results-directory ${{ github.workspace }}/RsApiClient.UnitTests/TestResults --diag:${{ github.workspace }}/RsApiClient.UnitTests/TestResults/log.txt
+
+      - name: Move Test Results to Reachable Directory
+        run: mv ${{ github.workspace }}/RsApiClient.UnitTests/TestResults/*/coverage.info ${{ github.workspace }}/RsApiClient.UnitTests/TestResults
+
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v1
+        with:
+          name: testcoverage
+          path: ${{ github.workspace }}/RsApiClient.UnitTests/TestResults
+
+      - name: Publish coverage report to coveralls.io
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path-to-lcov: ${{ github.workspace }}/RsApiClient.UnitTests/TestResults/coverage.info 
+
+      
+
+      - name: Echo Version
+        run: | 
+          echo "${BUILD_VERSION}"
+          echo $BUILD_VERSION
+          $BUILD_VERSION
+          echo "${VERSION}"
+          echo $VERSION
+          $VERSION
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v1
+        with:
+          name: packages
+          path: output
+
+      - name: Push to GitHub NuGet Repo
+        run: dotnet nuget push output/**/*.nupkg --skip-duplicate --api-key ${{ secrets.MYGET_TOKEN }} --source https://www.myget.org/F/rsapiclient/api/v3/index.json
