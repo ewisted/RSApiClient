@@ -1,6 +1,5 @@
 name: CI Build
 
-
 on:
   push:
     branches:
@@ -9,7 +8,7 @@ on:
 
 env:
   MAJOR: 1
-  MINOR: 0
+  MINOR: 2
   PATCH: 0
 
 jobs:
@@ -71,8 +70,6 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path-to-lcov: ${{ github.workspace }}/RsApiClient.UnitTests/TestResults/coverage.info 
-
-      
 
       - name: Echo Version
         run: | 
