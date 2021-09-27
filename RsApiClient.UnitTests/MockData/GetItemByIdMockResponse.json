@@ -1,0 +1,32 @@
+{
+    "item": {
+        "icon": "https://secure.runescape.com/m=itemdb_oldschool/1632306586200_obj_sprite.gif?id=50",
+        "icon_large": "https://secure.runescape.com/m=itemdb_oldschool/1632306586200_obj_big.gif?id=50",
+        "id": 50,
+        "type": "Default",
+        "typeIcon": "https://www.runescape.com/img/categories/Default",
+        "name": "Shortbow (u)",
+        "description": "I need to find a string for this.",
+        "current": {
+            "trend": "neutral",
+            "price": 5
+        },
+        "today": {
+            "trend": "neutral",
+            "price": 0
+        },
+        "members": "true",
+        "day30": {
+            "trend": "neutral",
+            "change": "0.0%"
+        },
+        "day90": {
+            "trend": "positive",
+            "change": "+25.0%"
+        },
+        "day180": {
+            "trend": "positive",
+            "change": "+25.0%"
+        }
+    }
+}

@@ -1,0 +1,68 @@
+﻿using RSApiClient.Models;
+
+namespace RSApiClient.ItemApi
+{
+    public class RS3ItemApiClient : ItemApiClientBase
+    {
+        public const string DefaultBaseUrl = "https://secure.runescape.com/m=itemdb_rs/api/";
+
+        public RS3ItemApiClient() : base(DefaultBaseUrl) { }
+        public RS3ItemApiClient(HttpClient httpClient) : base(httpClient) { }
+
+        public override async IAsyncEnumerable<ItemPage> GetAllItemsAsync()
+        {
+            bool currentCategoryFinished = false;
+            int page = 1;
+            foreach (int category in GetCategoriesForGetAllItemsQuery())
+            {
+                int categoryOffset = 0;
+                foreach (string character in GetCharsForGetAllItemsQuery())
+                {
+                    if (currentCategoryFinished)
+                    {
+                        currentCategoryFinished = false;
+                        break;
+                    }
+
+                    for (int i = 0; true; i++)
+                    {
+                        string query = string.Format(ItemEndpoints.GetAllItemsQueryTemplate, category, character, i + 1);
+                        ItemPage result = await SendRequestAsync<ItemPage>(HttpMethod.Get, query);
+                        if (!result.Items.Any())
+                        {
+                            break;
+                        }
+
+                        result.Offset = categoryOffset;
+                        result.Page = page;
+                        result.Current = result.Items.Count();
+                        result.Character = character != "%23" ? character : "numerics";
+                        result.Category = category;
+
+                        yield return result;
+
+
+                        if (categoryOffset + result.Current < result.TotalForCategory)
+                        {
+                            categoryOffset += result.Current;
+                            page++;
+                        }
+                        else
+                        {
+                            currentCategoryFinished = true;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
+        protected IEnumerable<int> GetCategoriesForGetAllItemsQuery()
+        {
+            for (int i = 0; i <= 41; i++)
+            {
+                yield return i;
+            }
+        }
+    }
+}

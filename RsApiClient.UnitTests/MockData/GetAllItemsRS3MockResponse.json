@@ -1,0 +1,113 @@
+{
+    "total": 12,
+    "items": [
+        {
+            "icon": "https://secure.runescape.com/m=itemdb_rs/1632142890363_obj_sprite.gif?id=4798",
+            "icon_large": "https://secure.runescape.com/m=itemdb_rs/1632142890363_obj_big.gif?id=4798",
+            "id": 4798,
+            "type": "Ammo",
+            "typeIcon": "https://www.runescape.com/img/categories/Ammo",
+            "name": "Adamant brutal",
+            "description": "Blunt adamant arrow...ouch.",
+            "current": {
+                "trend": "neutral",
+                "price": 399
+            },
+            "today": {
+                "trend": "neutral",
+                "price": 0
+            },
+            "members": "true"
+        },
+        {
+            "icon": "https://secure.runescape.com/m=itemdb_rs/1632142890363_obj_sprite.gif?id=810",
+            "icon_large": "https://secure.runescape.com/m=itemdb_rs/1632142890363_obj_big.gif?id=810",
+            "id": 810,
+            "type": "Ammo",
+            "typeIcon": "https://www.runescape.com/img/categories/Ammo",
+            "name": "Adamant dart",
+            "description": "A deadly throwing dart with an adamant tip.",
+            "current": {
+                "trend": "neutral",
+                "price": 30
+            },
+            "today": {
+                "trend": "positive",
+                "price": "+1"
+            },
+            "members": "false"
+        },
+        {
+            "icon": "https://secure.runescape.com/m=itemdb_rs/1632142890363_obj_sprite.gif?id=829",
+            "icon_large": "https://secure.runescape.com/m=itemdb_rs/1632142890363_obj_big.gif?id=829",
+            "id": 829,
+            "type": "Ammo",
+            "typeIcon": "https://www.runescape.com/img/categories/Ammo",
+            "name": "Adamant javelin",
+            "description": "An adamant tipped javelin.",
+            "current": {
+                "trend": "neutral",
+                "price": 69
+            },
+            "today": {
+                "trend": "neutral",
+                "price": 0
+            },
+            "members": "false"
+        },
+        {
+            "icon": "https://secure.runescape.com/m=itemdb_rs/1632142890363_obj_sprite.gif?id=867",
+            "icon_large": "https://secure.runescape.com/m=itemdb_rs/1632142890363_obj_big.gif?id=867",
+            "id": 867,
+            "type": "Ammo",
+            "typeIcon": "https://www.runescape.com/img/categories/Ammo",
+            "name": "Adamant knife",
+            "description": "A finely balanced throwing knife.",
+            "current": {
+                "trend": "neutral",
+                "price": 388
+            },
+            "today": {
+                "trend": "neutral",
+                "price": 0
+            },
+            "members": "false"
+        },
+        {
+            "icon": "https://secure.runescape.com/m=itemdb_rs/1632142890363_obj_sprite.gif?id=804",
+            "icon_large": "https://secure.runescape.com/m=itemdb_rs/1632142890363_obj_big.gif?id=804",
+            "id": 804,
+            "type": "Ammo",
+            "typeIcon": "https://www.runescape.com/img/categories/Ammo",
+            "name": "Adamant throwing axe",
+            "description": "A finely balanced throwing axe.",
+            "current": {
+                "trend": "neutral",
+                "price": 393
+            },
+            "today": {
+                "trend": "neutral",
+                "price": 0
+            },
+            "members": "false"
+        },
+        {
+            "icon": "https://secure.runescape.com/m=itemdb_rs/1632142890363_obj_sprite.gif?id=31597",
+            "icon_large": "https://secure.runescape.com/m=itemdb_rs/1632142890363_obj_big.gif?id=31597",
+            "id": 31597,
+            "type": "Ammo",
+            "typeIcon": "https://www.runescape.com/img/categories/Ammo",
+            "name": "Azure skillchompa",
+            "description": "Can be used to enhance gathering of energy, fish, logs, ore and materials, as a rune-equivalent tool, where applicable.",
+            "current": {
+                "trend": "neutral",
+                "price": 627
+            },
+            "today": {
+                "trend": "neutral",
+                "price": 0
+            },
+            "members": "true"
+        }
+    ]
+}
