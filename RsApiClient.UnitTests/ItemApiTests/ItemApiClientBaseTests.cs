@@ -13,7 +13,7 @@ namespace RsApiClient.UnitTests.ItemApiTests
         public async Task GetItemByIdTest()
         {
             // Arrange
-            TestItemApiClient mockApiClient = GetItemApiClient<TestItemApiClient>(@".\MockData\GetItemByIdMockResponse.json");
+            TestItemApiClient mockApiClient = GetItemApiClient<TestItemApiClient>(@"MockData/GetItemByIdMockResponse.json");
 
             // Act
             Item item = await mockApiClient.GetItemByIdAsync(50);
@@ -26,7 +26,7 @@ namespace RsApiClient.UnitTests.ItemApiTests
         public async Task GetGraphDataForItemTest()
         {
             // Arrange
-            TestItemApiClient mockApiClient = GetItemApiClient<TestItemApiClient>(@".\MockData\GetGraphDataForItemMockResponse.json");
+            TestItemApiClient mockApiClient = GetItemApiClient<TestItemApiClient>(@"MockData/GetGraphDataForItemMockResponse.json");
 
             // Act
             ItemGraphData graphData = await mockApiClient.GetGraphDataForItem(4151);

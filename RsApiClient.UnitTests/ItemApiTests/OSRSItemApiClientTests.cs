@@ -13,7 +13,7 @@ namespace RsApiClient.UnitTests
         public async Task GetAllItemsTest()
         {
             // Arrange
-            var mockResponse = File.ReadAllText(@".\MockData\GetAllItemsOSRSMockResponse.json");
+            var mockResponse = File.ReadAllText(@"MockData/GetAllItemsOSRSMockResponse.json");
             var dict = new Dictionary<string, string>();
             List<string> chars = new List<string>();
             for (char c = 'A'; c <= 'Z'; c++)
