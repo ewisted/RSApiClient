@@ -1,6 +1,5 @@
 name: CI Build
 
-
 on:
   push:
     branches:
@@ -29,7 +28,8 @@ jobs:
       - name: Setup .NET 6
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: 6.0
+          dotnet-version: '6.0.x'
+          include-prerelease: true
           source-url: https://www.myget.org/F/rsapiclient/api/v3/index.json
         env:
           NUGET_AUTH_TOKEN: ${{secrets.MYGET_TOKEN}}
@@ -71,8 +71,6 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           path-to-lcov: ${{ github.workspace }}/RsApiClient.UnitTests/TestResults/coverage.info 
-
-      
 
       - name: Echo Version
         run: | 
