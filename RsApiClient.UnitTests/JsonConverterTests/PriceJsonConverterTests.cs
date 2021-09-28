@@ -46,7 +46,7 @@ namespace RsApiClient.UnitTests.JsonConverterTests
         }
 
         [Test]
-        public void ReadTest_PercentString()
+        public void ReadTest_PercentPositiveString()
         {
             // Arrange
             var testJson = "\"+65.0%\"";
@@ -60,6 +60,23 @@ namespace RsApiClient.UnitTests.JsonConverterTests
 
             // Assert
             Assert.AreEqual(65, result);
+        }
+
+        [Test]
+        public void ReadTest_PercentNegativeString()
+        {
+            // Arrange
+            var testJson = "\"-65.0%\"";
+            var bytes = new ReadOnlySpan<byte>(Encoding.UTF8.GetBytes(testJson));
+            Utf8JsonReader reader = new Utf8JsonReader(bytes);
+            reader.Read();
+            PriceJsonConverter converter = new PriceJsonConverter();
+
+            // Act
+            var result = converter.Read(ref reader, typeof(int), new JsonSerializerOptions());
+
+            // Assert
+            Assert.AreEqual(-65, result);
         }
 
         [Test]

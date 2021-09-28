@@ -30,7 +30,15 @@ namespace RSApiClient.JsonConverters
             {
                 if (value.Contains("%"))
                 {
-                    value = string.Concat(value.Skip(1).TakeWhile(c => c != '.'));
+                    if (value[0] == '+')
+                    {
+                        value = string.Concat(value.Skip(1).TakeWhile(c => c != '.'));
+                    }
+                    else
+                    {
+                        value = string.Concat(value.TakeWhile(c => c != '.'));
+                    }
+                    
                     result = int.Parse(value);
                 }
                 else
