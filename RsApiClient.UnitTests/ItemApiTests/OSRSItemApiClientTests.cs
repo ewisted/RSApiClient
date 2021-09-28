@@ -3,9 +3,10 @@ using RSApiClient.ItemApi;
 using RSApiClient.Models;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 
-namespace RsApiClient.UnitTests
+namespace RsApiClient.UnitTests.ItemApiTests
 {
     public class OSRSItemApiClientTests : TestBase
     {
@@ -44,6 +45,21 @@ namespace RsApiClient.UnitTests
 
             // Assert
             Assert.AreEqual(27, pages.Count);
+        }
+
+        [Test]
+        public async Task GetAllItemsTest_Cancelled()
+        {
+            // Arrange
+            OSRSItemApiClient client = new OSRSItemApiClient();
+            CancellationTokenSource source = new CancellationTokenSource();
+            source.Cancel();
+
+            // Act
+            var result = await client.GetAllItemsAsync().WithCancellation(source.Token).GetAsyncEnumerator().MoveNextAsync();
+
+            // Assert
+            Assert.IsFalse(result);
         }
     }
 }

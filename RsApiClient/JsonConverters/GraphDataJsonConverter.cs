@@ -14,7 +14,7 @@ namespace RSApiClient.JsonConverters
         {
             if (reader.TokenType != JsonTokenType.StartObject)
             {
-                throw new JsonException();
+                throw new JsonException($"Expected a start object token but got {reader.TokenType}");
             }
 
             var dictionary = new Dictionary<DateTimeOffset, int>();
@@ -23,19 +23,14 @@ namespace RSApiClient.JsonConverters
             {
                 if (reader.TokenType == JsonTokenType.EndObject)
                 {
-                    return dictionary;
-                }
-
-                if (reader.TokenType != JsonTokenType.PropertyName)
-                {
-                    throw new JsonException();
+                    break;
                 }
 
                 // Get the key
                 string propertyName = reader.GetString() ?? throw new JsonException();
                 if (!long.TryParse(propertyName, out long epochTime))
                 {
-                    throw new JsonException($"Unable to convert \"{propertyName}\" to DateTimeOffset.");
+                    throw new JsonException($"Unable to convert \"{propertyName}\" to DateTimeOffset");
                 }
                 DateTimeOffset key = DateTimeOffset.FromUnixTimeMilliseconds(epochTime);
 
@@ -45,7 +40,7 @@ namespace RSApiClient.JsonConverters
                 dictionary.Add(key, value);
             }
 
-            throw new JsonException();
+            return dictionary;
         }
 
         public override void Write(Utf8JsonWriter writer, Dictionary<DateTimeOffset, int> dictionary, JsonSerializerOptions options)
@@ -54,7 +49,7 @@ namespace RSApiClient.JsonConverters
 
             foreach ((DateTimeOffset key, int value) in dictionary)
             {
-                string propertyName = key.ToUnixTimeSeconds().ToString();
+                string propertyName = key.ToUnixTimeMilliseconds().ToString();
                 writer.WritePropertyName(propertyName);
 
                 JsonSerializer.Serialize(writer, value, options);

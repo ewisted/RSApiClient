@@ -2,10 +2,8 @@
 using RSApiClient.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 
 namespace RsApiClient.UnitTests.Models
 {
@@ -13,7 +11,7 @@ namespace RsApiClient.UnitTests.Models
     {
         public TestItemApiClient(HttpClient httpClient) : base(httpClient) { }
 
-        public override IAsyncEnumerable<ItemPage> GetAllItemsAsync()
+        public override IAsyncEnumerable<ItemPage> GetAllItemsAsync(CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
