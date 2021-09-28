@@ -14,6 +14,7 @@ namespace RsApiClient.UnitTests.ItemApiTests
         public async Task GetAllItemsTest()
         {
             // Arrange
+            CancellationTokenSource tokenSource = new CancellationTokenSource();
             var mockResponse = File.ReadAllText(@"MockData/GetAllItemsOSRSMockResponse.json");
             var dict = new Dictionary<string, string>();
             List<string> chars = new List<string>();
@@ -38,7 +39,7 @@ namespace RsApiClient.UnitTests.ItemApiTests
 
             // Act
             List<ItemPage> pages = new List<ItemPage>();
-            await foreach (var page in client.GetAllItemsAsync())
+            await foreach (var page in client.GetAllItemsAsync().WithCancellation(tokenSource.Token))
             {
                 pages.Add(page);
             }

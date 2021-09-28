@@ -7,11 +7,11 @@ namespace RSApiClient.Models
     {
         [JsonPropertyName("price")]
         [JsonConverter(typeof(PriceJsonConverter))]
-        public string Price { get; set; }
+        public int Price { get; set; }
 
         public ItemPriceTrend()
         {
-            Price = "";
+            Price = 0;
         }
     }
 }
