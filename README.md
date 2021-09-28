@@ -1,4 +1,4 @@
-![Nightly Status](https://github.com/ewisted/RSApiClient/actions/workflows/ci-build.yml/badge.svg?branch=develop)
+[![Nightly Status](https://github.com/ewisted/RSApiClient/actions/workflows/ci-build.yml/badge.svg?branch=develop)](https://www.myget.org/feed/rsapiclient/package/nuget/RSApiClient)
 [![Coverage Status](https://coveralls.io/repos/github/ewisted/RSApiClient/badge.svg?branch=develop&service=github)](https://coveralls.io/github/ewisted/RSApiClient?branch=develop)
 
 # RSApiClient
