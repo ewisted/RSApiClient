@@ -14,7 +14,7 @@ namespace RSApiClient.JsonConverters
                 case JsonTokenType.String:
                     return reader.GetString();
                 default:
-                    throw new JsonException();
+                    throw new JsonException($"Invalid token when attempting to deserialize price: {reader.TokenType}");
             }
         }
 

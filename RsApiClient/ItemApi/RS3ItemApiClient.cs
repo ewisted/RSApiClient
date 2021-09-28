@@ -1,4 +1,5 @@
 ﻿using RSApiClient.Models;
+using System.Runtime.CompilerServices;
 
 namespace RSApiClient.ItemApi
 {
@@ -9,7 +10,7 @@ namespace RSApiClient.ItemApi
         public RS3ItemApiClient() : base(DefaultBaseUrl) { }
         public RS3ItemApiClient(HttpClient httpClient) : base(httpClient) { }
 
-        public override async IAsyncEnumerable<ItemPage> GetAllItemsAsync()
+        public override async IAsyncEnumerable<ItemPage> GetAllItemsAsync([EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             bool currentCategoryFinished = false;
             int page = 1;
@@ -18,6 +19,18 @@ namespace RSApiClient.ItemApi
                 int categoryOffset = 0;
                 foreach (string character in GetCharsForGetAllItemsQuery())
                 {
+                    if (cancellationToken != default)
+                    {
+                        try
+                        {
+                            cancellationToken.ThrowIfCancellationRequested();
+                        }
+                        catch (OperationCanceledException)
+                        {
+                            yield break;
+                        }
+                    }
+
                     if (currentCategoryFinished)
                     {
                         currentCategoryFinished = false;

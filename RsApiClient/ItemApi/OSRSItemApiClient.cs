@@ -1,4 +1,5 @@
 ﻿using RSApiClient.Models;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 
 namespace RSApiClient.ItemApi
@@ -10,7 +11,7 @@ namespace RSApiClient.ItemApi
         public OSRSItemApiClient() : base(DefaultBaseUrl) { }
         public OSRSItemApiClient(HttpClient httpClient) : base(httpClient) { }
 
-        public override async IAsyncEnumerable<ItemPage> GetAllItemsAsync()
+        public override async IAsyncEnumerable<ItemPage> GetAllItemsAsync([EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             int offset = 0;
             int page = 1;
@@ -18,6 +19,18 @@ namespace RSApiClient.ItemApi
             {
                 for (int i = 0; true; i++)
                 {
+                    if (cancellationToken != default)
+                    {
+                        try
+                        {
+                            cancellationToken.ThrowIfCancellationRequested();
+                        }
+                        catch (OperationCanceledException)
+                        {
+                            yield break;
+                        }
+                    }
+
                     string query = string.Format(ItemEndpoints.GetAllItemsQueryTemplate, 1, character, i + 1);
                     ItemPage result = await SendRequestAsync<ItemPage>(HttpMethod.Get, query);
                     if (!result.Items.Any())

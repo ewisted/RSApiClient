@@ -1,5 +1,6 @@
 ﻿using RSApiClient.JsonConverters;
 using RSApiClient.Models;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 
 namespace RSApiClient.ItemApi
@@ -7,17 +8,24 @@ namespace RSApiClient.ItemApi
     public abstract class ItemApiClientBase : IItemApiClient
     {
         private readonly HttpClient _httpClient;
-        private const int MaxRetries = 3;
 
         protected ItemApiClientBase(string baseUrl) : this(new HttpClient() { BaseAddress = new Uri(baseUrl) }) { }
 
         protected ItemApiClientBase(HttpClient httpClient)
         {
             _httpClient = httpClient;
-            DelayBetweenRetries = TimeSpan.FromSeconds(5);
+            DelayBetweenRetries = TimeSpan.FromSeconds(3);
+            MaxRetries = 3;
         }
 
+        /// <summary>
+        /// Time to wait before retrying failed requests. Default is 3 seconds.
+        /// </summary>
         public TimeSpan DelayBetweenRetries { get; set; }
+        /// <summary>
+        /// Maximum number of times to retry a failed request. Defaul is 3.
+        /// </summary>
+        public int MaxRetries { get; set; }
 
         public async Task<Item> GetItemByIdAsync(int itemId)
         {
@@ -26,7 +34,7 @@ namespace RSApiClient.ItemApi
             return result.Item;
         }
 
-        public abstract IAsyncEnumerable<ItemPage> GetAllItemsAsync();
+        public abstract IAsyncEnumerable<ItemPage> GetAllItemsAsync(CancellationToken cancellationToken = default);
 
         public async Task<ItemGraphData> GetGraphDataForItem(int itemId)
         {

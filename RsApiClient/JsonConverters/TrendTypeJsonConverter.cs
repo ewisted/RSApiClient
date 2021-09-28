@@ -29,20 +29,7 @@ namespace RSApiClient.JsonConverters
 
         public override void Write(Utf8JsonWriter writer, TrendType value, JsonSerializerOptions options)
         {
-            switch (value)
-            {
-                case TrendType.Negative:
-                    writer.WriteStringValue("negative");
-                    break;
-                case TrendType.Neutral:
-                    writer.WriteStringValue("neutral");
-                    break;
-                case TrendType.Positive:
-                    writer.WriteStringValue("positive");
-                    break;
-                default:
-                    break;
-            }
+            writer.WriteStringValue(value.ToString().ToLower());
         }
     }
 }
