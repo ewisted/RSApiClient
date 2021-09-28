@@ -3,6 +3,7 @@ using RSApiClient.ItemApi;
 using RSApiClient.Models;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace RsApiClient.UnitTests.ItemApiTests
@@ -42,6 +43,21 @@ namespace RsApiClient.UnitTests.ItemApiTests
 
             // Assert
             Assert.AreEqual(84, pages.Count);
+        }
+
+        [Test]
+        public async Task GetAllItemsTest_Cancelled()
+        {
+            // Arrange
+            RS3ItemApiClient client = new RS3ItemApiClient();
+            CancellationTokenSource source = new CancellationTokenSource();
+            source.Cancel();
+
+            // Act
+            var result = await client.GetAllItemsAsync().WithCancellation(source.Token).GetAsyncEnumerator().MoveNextAsync();
+
+            // Assert
+            Assert.IsFalse(result);
         }
     }
 }
