@@ -26,11 +26,11 @@ namespace RsApiClient.UnitTests.ItemApiTests
 
             for (int i = 0; i < 27; i++)
             {
-                string firstRelQuery = string.Format(ItemEndpoints.GetAllItemsQueryTemplate, 1, chars[i], 1);
+                string firstRelQuery = string.Format(ItemEndpoints.GetItemsQueryTemplate, 1, chars[i], 1);
                 string firstAbsQuery = $"{TestBaseUrl}{firstRelQuery}";
                 dict.Add(firstAbsQuery, mockResponse);
 
-                string secondRelQuery = string.Format(ItemEndpoints.GetAllItemsQueryTemplate, 1, chars[i], 2);
+                string secondRelQuery = string.Format(ItemEndpoints.GetItemsQueryTemplate, 1, chars[i], 2);
                 string secondAbsQuery = $"{TestBaseUrl}{secondRelQuery}";
                 dict.Add(secondAbsQuery, "{\"Total\": 324, \"Items\": []}");
             }

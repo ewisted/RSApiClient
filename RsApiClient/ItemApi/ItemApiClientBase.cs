@@ -36,6 +36,12 @@ namespace RSApiClient.ItemApi
 
         public abstract IAsyncEnumerable<ItemPage> GetAllItemsAsync(CancellationToken cancellationToken = default);
 
+        public async Task<ItemPage> GetItemPageAsync(int category, string character, int page)
+        {
+            string query = string.Format(ItemEndpoints.GetItemsQueryTemplate, category, character, page);
+            return await SendRequestAsync<ItemPage>(HttpMethod.Get, query);
+        }
+
         public async Task<ItemGraphData> GetGraphDataForItem(int itemId)
         {
             JsonSerializerOptions options = new JsonSerializerOptions();

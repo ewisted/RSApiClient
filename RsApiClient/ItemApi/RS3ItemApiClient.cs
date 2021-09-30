@@ -39,8 +39,7 @@ namespace RSApiClient.ItemApi
 
                     for (int i = 0; true; i++)
                     {
-                        string query = string.Format(ItemEndpoints.GetAllItemsQueryTemplate, category, character, i + 1);
-                        ItemPage result = await SendRequestAsync<ItemPage>(HttpMethod.Get, query);
+                        ItemPage result = await GetItemPageAsync(category, character, i + 1);
                         if (!result.Items.Any())
                         {
                             break;

@@ -21,6 +21,15 @@ namespace RSApiClient.ItemApi
         IAsyncEnumerable<ItemPage> GetAllItemsAsync(CancellationToken cancellationToken = default);
 
         /// <summary>
+        /// Retrieves a single page of items from the Grand Exchange API.
+        /// </summary>
+        /// <param name="category">An integer representing an item category. Valid values are 0-41 for RS3 and 1 for OSRS.</param>
+        /// <param name="character">A lowercase character string representing the first character in an item's name. For numerics, use "%23".</param>
+        /// <param name="page">An integer representing the page to get for the given category and character.</param>
+        /// <returns>A single item page.</returns>
+        Task<ItemPage> GetItemPageAsync(int category, string character, int page);
+
+        /// <summary>
         /// Gets the Grand Exchange price trend graph data for the given item id.
         /// </summary>
         /// <param name="itemId">The RS item id to get graph data for.</param>
