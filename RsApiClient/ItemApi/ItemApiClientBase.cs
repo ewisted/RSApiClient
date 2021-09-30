@@ -39,7 +39,12 @@ namespace RSApiClient.ItemApi
         public async Task<ItemPage> GetItemPageAsync(int category, string character, int page)
         {
             string query = string.Format(ItemEndpoints.GetItemsQueryTemplate, category, character, page);
-            return await SendRequestAsync<ItemPage>(HttpMethod.Get, query);
+            ItemPage result = await SendRequestAsync<ItemPage>(HttpMethod.Get, query);
+            result.Current = result.Items.Count();
+            result.Category = category;
+            result.Character = character;
+            result.Page = page;
+            return result;
         }
 
         public async Task<ItemGraphData> GetGraphDataForItem(int itemId)

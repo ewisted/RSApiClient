@@ -47,8 +47,7 @@ namespace RSApiClient.ItemApi
 
                         result.Offset = categoryOffset;
                         result.Page = page;
-                        result.Current = result.Items.Count();
-                        result.Character = character != "%23" ? character : "numerics";
+                        result.Character = character;
                         result.Category = category;
 
                         yield return result;

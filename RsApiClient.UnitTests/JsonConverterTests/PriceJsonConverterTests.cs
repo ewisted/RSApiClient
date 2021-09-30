@@ -46,6 +46,23 @@ namespace RsApiClient.UnitTests.JsonConverterTests
         }
 
         [Test]
+        public void ReadTest_BString()
+        {
+            // Arrange
+            var testJson = "\"1.4b\"";
+            var bytes = new ReadOnlySpan<byte>(Encoding.UTF8.GetBytes(testJson));
+            Utf8JsonReader reader = new Utf8JsonReader(bytes);
+            reader.Read();
+            PriceJsonConverter converter = new PriceJsonConverter();
+
+            // Act
+            var result = converter.Read(ref reader, typeof(int), new JsonSerializerOptions());
+
+            // Assert
+            Assert.AreEqual(1400000000, result);
+        }
+
+        [Test]
         public void ReadTest_PercentPositiveString()
         {
             // Arrange

@@ -39,8 +39,7 @@ namespace RSApiClient.ItemApi
 
                     result.Offset = offset;
                     result.Page = page;
-                    result.Current = result.Items.Count();
-                    result.Character = character != "%23" ? character : "0-9";
+                    result.Character = character;
 
                     yield return result;
 

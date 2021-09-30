@@ -44,21 +44,27 @@ namespace RSApiClient.JsonConverters
                 else
                 {
                     value = value.Replace("-", "").Replace("+", "").Trim();
-                    if (value.Contains('m', StringComparison.InvariantCultureIgnoreCase))
+                    if (value.Contains('b', StringComparison.InvariantCultureIgnoreCase))
                     {
-                        value = value.Replace("m", "");
+                        value = value.Replace("b", "").Trim();
+                        var doubleValue = double.Parse(value);
+                        result = Convert.ToInt32(doubleValue * 1000000000);
+                    }
+                    else if (value.Contains('m', StringComparison.InvariantCultureIgnoreCase))
+                    {
+                        value = value.Replace("m", "").Trim();
                         var doubleValue = double.Parse(value);
                         result = Convert.ToInt32(doubleValue * 1000000);
                     }
                     else if (value.Contains('k', StringComparison.InvariantCultureIgnoreCase))
                     {
-                        value = value.Replace("k", "");
+                        value = value.Replace("k", "").Trim();
                         var doubleValue = double.Parse(value);
                         result = Convert.ToInt32(doubleValue * 1000);
                     }
                     else
                     {
-                        value = value.Replace(",", "");
+                        value = value.Replace(",", "").Trim();
                         result = int.Parse(value);
                     }
                 }
