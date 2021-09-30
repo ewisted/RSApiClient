@@ -1,15 +1,17 @@
-﻿using System.Text.Json.Serialization;
+﻿using RSApiClient.JsonConverters;
+using System.Text.Json.Serialization;
 
 namespace RSApiClient.Models
 {
     public class ItemChangeTrend : ItemTrendBase
     {
         [JsonPropertyName("change")]
-        public string PercentageChanged { get; set; }
+        [JsonConverter(typeof(PriceJsonConverter))]
+        public int PercentageChanged { get; set; }
 
         public ItemChangeTrend()
         {
-            PercentageChanged = "";
+            PercentageChanged = 0;
         }
     }
 }

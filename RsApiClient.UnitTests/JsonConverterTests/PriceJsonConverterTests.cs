@@ -12,7 +12,7 @@ namespace RsApiClient.UnitTests.JsonConverterTests
     public class PriceJsonConverterTests
     {
         [Test]
-        public void ReadTest_String()
+        public void ReadTest_KString()
         {
             // Arrange
             var testJson = "\"14.5k\"";
@@ -22,11 +22,95 @@ namespace RsApiClient.UnitTests.JsonConverterTests
             PriceJsonConverter converter = new PriceJsonConverter();
 
             // Act
-            var result = converter.Read(ref reader, typeof(bool), new JsonSerializerOptions());
+            var result = converter.Read(ref reader, typeof(int), new JsonSerializerOptions());
 
             // Assert
-            Assert.NotNull(result);
-            Assert.AreEqual("14.5k", result);
+            Assert.AreEqual(14500, result);
+        }
+
+        [Test]
+        public void ReadTest_MString()
+        {
+            // Arrange
+            var testJson = "\"22.5m\"";
+            var bytes = new ReadOnlySpan<byte>(Encoding.UTF8.GetBytes(testJson));
+            Utf8JsonReader reader = new Utf8JsonReader(bytes);
+            reader.Read();
+            PriceJsonConverter converter = new PriceJsonConverter();
+
+            // Act
+            var result = converter.Read(ref reader, typeof(int), new JsonSerializerOptions());
+
+            // Assert
+            Assert.AreEqual(22500000, result);
+        }
+
+        [Test]
+        public void ReadTest_BString()
+        {
+            // Arrange
+            var testJson = "\"1.4b\"";
+            var bytes = new ReadOnlySpan<byte>(Encoding.UTF8.GetBytes(testJson));
+            Utf8JsonReader reader = new Utf8JsonReader(bytes);
+            reader.Read();
+            PriceJsonConverter converter = new PriceJsonConverter();
+
+            // Act
+            var result = converter.Read(ref reader, typeof(int), new JsonSerializerOptions());
+
+            // Assert
+            Assert.AreEqual(1400000000, result);
+        }
+
+        [Test]
+        public void ReadTest_PercentPositiveString()
+        {
+            // Arrange
+            var testJson = "\"+65.0%\"";
+            var bytes = new ReadOnlySpan<byte>(Encoding.UTF8.GetBytes(testJson));
+            Utf8JsonReader reader = new Utf8JsonReader(bytes);
+            reader.Read();
+            PriceJsonConverter converter = new PriceJsonConverter();
+
+            // Act
+            var result = converter.Read(ref reader, typeof(int), new JsonSerializerOptions());
+
+            // Assert
+            Assert.AreEqual(65, result);
+        }
+
+        [Test]
+        public void ReadTest_PercentNegativeString()
+        {
+            // Arrange
+            var testJson = "\"-65.0%\"";
+            var bytes = new ReadOnlySpan<byte>(Encoding.UTF8.GetBytes(testJson));
+            Utf8JsonReader reader = new Utf8JsonReader(bytes);
+            reader.Read();
+            PriceJsonConverter converter = new PriceJsonConverter();
+
+            // Act
+            var result = converter.Read(ref reader, typeof(int), new JsonSerializerOptions());
+
+            // Assert
+            Assert.AreEqual(-65, result);
+        }
+
+        [Test]
+        public void ReadTest_CommaString()
+        {
+            // Arrange
+            var testJson = "\"- 1,472\"";
+            var bytes = new ReadOnlySpan<byte>(Encoding.UTF8.GetBytes(testJson));
+            Utf8JsonReader reader = new Utf8JsonReader(bytes);
+            reader.Read();
+            PriceJsonConverter converter = new PriceJsonConverter();
+
+            // Act
+            var result = converter.Read(ref reader, typeof(int), new JsonSerializerOptions());
+
+            // Assert
+            Assert.AreEqual(1472, result);
         }
 
         [Test]
@@ -40,11 +124,10 @@ namespace RsApiClient.UnitTests.JsonConverterTests
             PriceJsonConverter converter = new PriceJsonConverter();
 
             // Act
-            var result = converter.Read(ref reader, typeof(bool), new JsonSerializerOptions());
+            var result = converter.Read(ref reader, typeof(int), new JsonSerializerOptions());
 
             // Assert
-            Assert.NotNull(result);
-            Assert.AreEqual(testJson, result);
+            Assert.AreEqual(42, result);
         }
 
         [Test]
@@ -61,7 +144,7 @@ namespace RsApiClient.UnitTests.JsonConverterTests
             Exception? exception = null;
             try
             {
-                converter.Read(ref reader, typeof(bool), new JsonSerializerOptions());
+                converter.Read(ref reader, typeof(int), new JsonSerializerOptions());
             }
             catch (Exception ex)
             {
@@ -77,7 +160,7 @@ namespace RsApiClient.UnitTests.JsonConverterTests
         public async Task WriteTest_Success()
         {
             // Arrange
-            var testObj = "14.5k";
+            var testObj = 42;
             PriceJsonConverter converter = new PriceJsonConverter();
             MemoryStream stream = new MemoryStream();
             var writer = new Utf8JsonWriter(stream);
@@ -96,7 +179,7 @@ namespace RsApiClient.UnitTests.JsonConverterTests
 
             // Assert
             Assert.NotNull(result);
-            Assert.AreEqual("\"14.5k\"", result);
+            Assert.AreEqual("42", result);
         }
     }
 #pragma warning restore CS8602 // Dereference of a possibly null reference.

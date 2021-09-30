@@ -31,8 +31,7 @@ namespace RSApiClient.ItemApi
                         }
                     }
 
-                    string query = string.Format(ItemEndpoints.GetAllItemsQueryTemplate, 1, character, i + 1);
-                    ItemPage result = await SendRequestAsync<ItemPage>(HttpMethod.Get, query);
+                    ItemPage result = await GetItemPageAsync(1, character, i + 1);
                     if (!result.Items.Any())
                     {
                         break;
@@ -40,8 +39,7 @@ namespace RSApiClient.ItemApi
 
                     result.Offset = offset;
                     result.Page = page;
-                    result.Current = result.Items.Count();
-                    result.Character = character != "%23" ? character : "0-9";
+                    result.Character = character;
 
                     yield return result;
 
