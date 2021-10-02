@@ -6,12 +6,8 @@ namespace RSApiClient.Endpoints
     {
         public static string GetEncodedQueryUrl(string queryTemplate, params object[] args)
         {
-            string unencodedString = string.Format(queryTemplate, args);
-            var encodedString = HttpUtility.UrlEncode(unencodedString);
-            if (string.IsNullOrWhiteSpace(encodedString))
-            {
-                throw new ArgumentException($"Unable to URL encode the query string: {queryTemplate}");
-            }
+            string?[] encodedArgs = args.Select(arg => HttpUtility.UrlEncode(arg.ToString())).ToArray();
+            string encodedString = string.Format(queryTemplate, encodedArgs);
             return encodedString;
         }
     }

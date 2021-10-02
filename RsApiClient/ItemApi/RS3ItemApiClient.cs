@@ -14,7 +14,7 @@ namespace RSApiClient.ItemApi
         {
             bool currentCategoryFinished = false;
             int page = 1;
-            foreach (ItemCategory category in GetCategoriesForGetAllItemsQuery())
+            foreach (ItemCategory category in Enum.GetValues(typeof(ItemCategory)).OfType<ItemCategory>())
             {
                 int categoryOffset = 0;
                 foreach (char character in GetCharsForGetAllItemsQuery())
@@ -65,14 +65,6 @@ namespace RSApiClient.ItemApi
                         }
                     }
                 }
-            }
-        }
-
-        protected IEnumerable<ItemCategory> GetCategoriesForGetAllItemsQuery()
-        {
-            for (int i = 0; i <= 41; i++)
-            {
-                yield return (ItemCategory)i;
             }
         }
     }
