@@ -2,14 +2,11 @@
 
 namespace RSApiClient.Models
 {
-    public class ItemResult
+    public record ItemResult
     {
         [JsonPropertyName("item")]
-        public Item Item { get; set; }
+        public Item Item { get; init; }
 
-        public ItemResult()
-        {
-            Item = new Item();
-        }
+        public ItemResult(Item item) => Item = item;
     }
 }

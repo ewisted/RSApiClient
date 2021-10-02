@@ -57,7 +57,7 @@ namespace RSApiClient.ItemApi
             return result;
         }
 
-        protected async Task<T> SendRequestAsync<T>(HttpMethod method, string queryString, JsonSerializerOptions? options = null, int attempt = 1) where T : new()
+        protected async Task<T> SendRequestAsync<T>(HttpMethod method, string queryString, JsonSerializerOptions? options = null, int attempt = 1)
         {
             try
             {
@@ -67,11 +67,7 @@ namespace RSApiClient.ItemApi
                 response.EnsureSuccessStatusCode();
 
                 string jsonContent = await response.Content.ReadAsStringAsync();
-                if (string.IsNullOrWhiteSpace(jsonContent))
-                {
-                    throw new JsonException("Response body was empty");
-                }
-                T result = JsonSerializer.Deserialize<T>(jsonContent, options) ?? new T();
+                T result = JsonSerializer.Deserialize<T>(jsonContent, options) ?? throw new JsonException("Deserialization result was null");
 
                 return result;
             }

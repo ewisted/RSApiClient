@@ -16,9 +16,8 @@ namespace RsApiClient.UnitTests
     {
         protected const string TestBaseUrl = "https://foo.bar/";
 
-        protected T GetItemApiClient<T>(string? mockDataPath = null) where T : ItemApiClientBase
+        protected T GetItemApiClient<T>(string? mockDataPath = null, string mockContentString = "") where T : ItemApiClientBase
         {
-            string mockContentString = "";
             if (!string.IsNullOrWhiteSpace(mockDataPath))
             {
                 mockContentString = File.ReadAllText(mockDataPath);

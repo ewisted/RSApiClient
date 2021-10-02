@@ -3,15 +3,13 @@ using System.Text.Json.Serialization;
 
 namespace RSApiClient.Models
 {
-    public class ItemPriceTrend : ItemTrendBase
+    public record ItemPriceTrend : ItemTrendBase
     {
         [JsonPropertyName("price")]
         [JsonConverter(typeof(PriceJsonConverter))]
-        public int Price { get; set; }
+        public int Price { get; init; }
 
-        public ItemPriceTrend()
-        {
-            Price = 0;
-        }
+        [JsonConstructor]
+        public ItemPriceTrend(TrendType trend, int price) => (Trend, Price) = (trend, price);
     }
 }
