@@ -2,8 +2,8 @@
 using System.Threading.Tasks;
 using RsApiClient.UnitTests.Models;
 using RSApiClient.Models;
-using RSApiClient.ItemApi;
 using System.Text.Json;
+using RSApiClient.Base;
 
 namespace RsApiClient.UnitTests.ItemApiTests
 {

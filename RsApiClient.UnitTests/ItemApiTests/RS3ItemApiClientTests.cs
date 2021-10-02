@@ -1,4 +1,5 @@
 ﻿using NUnit.Framework;
+using RSApiClient.Endpoints;
 using RSApiClient.ItemApi;
 using RSApiClient.Models;
 using System.Collections.Generic;
@@ -19,15 +20,15 @@ namespace RsApiClient.UnitTests.ItemApiTests
 
             for (int i = 0; i <= 41; i++)
             {
-                string firstRelQuery = string.Format(ItemEndpoints.GetItemsQueryTemplate, i, "a", 1);
+                string firstRelQuery = EndpointUtils.GetEncodedQueryUrl(ItemEndpoints.GetItemsQueryTemplate, i, "a", 1);
                 string firstAbsQuery = $"{TestBaseUrl}{firstRelQuery}";
                 dict.Add(firstAbsQuery, mockResponse);
 
-                string secondRelQuery = string.Format(ItemEndpoints.GetItemsQueryTemplate, i, "a", 2);
+                string secondRelQuery = EndpointUtils.GetEncodedQueryUrl(ItemEndpoints.GetItemsQueryTemplate, i, "a", 2);
                 string secondAbsQuery = $"{TestBaseUrl}{secondRelQuery}";
                 dict.Add(secondAbsQuery, "{\"Total\": 12, \"Items\": []}");
 
-                string thirdRelQuery = string.Format(ItemEndpoints.GetItemsQueryTemplate, i, "b", 1);
+                string thirdRelQuery = EndpointUtils.GetEncodedQueryUrl(ItemEndpoints.GetItemsQueryTemplate, i, "b", 1);
                 string thirdAbsQuery = $"{TestBaseUrl}{thirdRelQuery}";
                 dict.Add(thirdAbsQuery, mockResponse);
             }

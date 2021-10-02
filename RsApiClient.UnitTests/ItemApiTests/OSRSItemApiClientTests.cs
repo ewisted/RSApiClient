@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
+using RSApiClient.Endpoints;
 
 namespace RsApiClient.UnitTests.ItemApiTests
 {
@@ -17,20 +18,20 @@ namespace RsApiClient.UnitTests.ItemApiTests
             CancellationTokenSource tokenSource = new CancellationTokenSource();
             var mockResponse = File.ReadAllText(@"MockData/GetAllItemsOSRSMockResponse.json");
             var dict = new Dictionary<string, string>();
-            List<string> chars = new List<string>();
-            for (char c = 'A'; c <= 'Z'; c++)
+            List<char> chars = new List<char>();
+            for (char c = 'a'; c <= 'z'; c++)
             {
-                chars.Add(c.ToString().ToLower());
+                chars.Add(c);
             }
-            chars.Add("%23");
+            chars.Add('#');
 
             for (int i = 0; i < 27; i++)
             {
-                string firstRelQuery = string.Format(ItemEndpoints.GetItemsQueryTemplate, 1, chars[i], 1);
+                string firstRelQuery = EndpointUtils.GetEncodedQueryUrl(ItemEndpoints.GetItemsQueryTemplate, 1, chars[i], 1);
                 string firstAbsQuery = $"{TestBaseUrl}{firstRelQuery}";
                 dict.Add(firstAbsQuery, mockResponse);
 
-                string secondRelQuery = string.Format(ItemEndpoints.GetItemsQueryTemplate, 1, chars[i], 2);
+                string secondRelQuery = EndpointUtils.GetEncodedQueryUrl(ItemEndpoints.GetItemsQueryTemplate, 1, chars[i], 2);
                 string secondAbsQuery = $"{TestBaseUrl}{secondRelQuery}";
                 dict.Add(secondAbsQuery, "{\"Total\": 324, \"Items\": []}");
             }

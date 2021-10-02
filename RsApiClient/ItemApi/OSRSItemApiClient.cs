@@ -15,7 +15,7 @@ namespace RSApiClient.ItemApi
         {
             int offset = 0;
             int page = 1;
-            foreach (string character in GetCharsForGetAllItemsQuery())
+            foreach (char character in GetCharsForGetAllItemsQuery())
             {
                 for (int i = 0; true; i++)
                 {
@@ -31,7 +31,7 @@ namespace RSApiClient.ItemApi
                         }
                     }
 
-                    ItemPage result = await GetItemPageAsync(1, character, i + 1);
+                    ItemPage result = await GetItemPageAsync(ItemCategory.Ammo, character, i + 1);
                     if (!result.Items.Any())
                     {
                         break;

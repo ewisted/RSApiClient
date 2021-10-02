@@ -14,10 +14,10 @@ namespace RSApiClient.ItemApi
         {
             bool currentCategoryFinished = false;
             int page = 1;
-            foreach (int category in GetCategoriesForGetAllItemsQuery())
+            foreach (ItemCategory category in GetCategoriesForGetAllItemsQuery())
             {
                 int categoryOffset = 0;
-                foreach (string character in GetCharsForGetAllItemsQuery())
+                foreach (char character in GetCharsForGetAllItemsQuery())
                 {
                     if (cancellationToken != default)
                     {
@@ -68,11 +68,11 @@ namespace RSApiClient.ItemApi
             }
         }
 
-        protected IEnumerable<int> GetCategoriesForGetAllItemsQuery()
+        protected IEnumerable<ItemCategory> GetCategoriesForGetAllItemsQuery()
         {
             for (int i = 0; i <= 41; i++)
             {
-                yield return i;
+                yield return (ItemCategory)i;
             }
         }
     }
