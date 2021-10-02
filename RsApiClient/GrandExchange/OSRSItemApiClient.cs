@@ -1,8 +1,8 @@
-﻿using RSApiClient.Models;
+﻿using RSApiClient.GrandExchange.Models;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 
-namespace RSApiClient.ItemApi
+namespace RSApiClient.GrandExchange
 {
     public class OSRSItemApiClient : ItemApiClientBase
     {

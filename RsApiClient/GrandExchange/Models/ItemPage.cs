@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace RSApiClient.Models
+namespace RSApiClient.GrandExchange.Models
 {
     public class ItemPage
     {

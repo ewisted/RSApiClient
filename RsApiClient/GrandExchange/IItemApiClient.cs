@@ -1,6 +1,6 @@
-﻿using RSApiClient.Models;
+﻿using RSApiClient.GrandExchange.Models;
 
-namespace RSApiClient.ItemApi
+namespace RSApiClient.GrandExchange
 {
     public interface IItemApiClient
     {

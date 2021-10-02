@@ -1,7 +1,7 @@
 ﻿using RSApiClient.JsonConverters;
 using System.Text.Json.Serialization;
 
-namespace RSApiClient.Models
+namespace RSApiClient.GrandExchange.Models
 {
     public abstract record ItemTrendBase
     {

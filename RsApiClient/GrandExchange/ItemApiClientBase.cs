@@ -1,11 +1,11 @@
 ﻿using RSApiClient.Base;
 using RSApiClient.Endpoints;
 using RSApiClient.JsonConverters;
-using RSApiClient.Models;
+using RSApiClient.GrandExchange.Models;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
 
-namespace RSApiClient.ItemApi
+namespace RSApiClient.GrandExchange
 {
     public abstract class ItemApiClientBase : ApiClientBase, IItemApiClient
     {

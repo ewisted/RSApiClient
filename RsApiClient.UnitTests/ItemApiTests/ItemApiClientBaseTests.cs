@@ -1,7 +1,7 @@
 ﻿using NUnit.Framework;
 using System.Threading.Tasks;
 using RsApiClient.UnitTests.Models;
-using RSApiClient.Models;
+using RSApiClient.GrandExchange.Models;
 using System.Text.Json;
 using RSApiClient.Base;
 

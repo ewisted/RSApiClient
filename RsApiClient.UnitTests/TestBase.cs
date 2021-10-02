@@ -1,5 +1,5 @@
 ﻿using Moq;
-using RSApiClient.ItemApi;
+using RSApiClient.GrandExchange;
 using System;
 using System.IO;
 using System.Net;

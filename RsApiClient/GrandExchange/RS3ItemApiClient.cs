@@ -1,7 +1,7 @@
-﻿using RSApiClient.Models;
+﻿using RSApiClient.GrandExchange.Models;
 using System.Runtime.CompilerServices;
 
-namespace RSApiClient.ItemApi
+namespace RSApiClient.GrandExchange
 {
     public class RS3ItemApiClient : ItemApiClientBase
     {

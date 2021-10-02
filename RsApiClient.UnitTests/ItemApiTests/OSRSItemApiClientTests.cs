@@ -1,6 +1,6 @@
 using NUnit.Framework;
-using RSApiClient.ItemApi;
-using RSApiClient.Models;
+using RSApiClient.GrandExchange;
+using RSApiClient.GrandExchange.Models;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;

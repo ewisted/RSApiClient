@@ -1,5 +1,5 @@
-﻿using RSApiClient.ItemApi;
-using RSApiClient.Models;
+﻿using RSApiClient.GrandExchange;
+using RSApiClient.GrandExchange.Models;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
