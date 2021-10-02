@@ -36,8 +36,7 @@ namespace RSApiClient.Base
                 HttpResponseMessage response = await _httpClient.SendAsync(request);
                 response.EnsureSuccessStatusCode();
 
-                string jsonContent = await response.Content.ReadAsStringAsync();
-                T result = JsonSerializer.Deserialize<T>(jsonContent, options) ?? throw new JsonException("Deserialization result was null");
+                T result = await JsonSerializer.DeserializeAsync<T>(response.Content.ReadAsStream()) ?? throw new JsonException("Deserialization result was null");
 
                 return result;
             }
