@@ -18,17 +18,23 @@ namespace RsApiClient.UnitTests.ItemApiTests
             var mockResponse = File.ReadAllText(@"MockData/GetAllItemsRS3MockResponse.json");
             var dict = new Dictionary<string, string>();
 
-            for (int i = 0; i <= 41; i++)
+			var catalogueResponse = File.ReadAllText(@"MockData/GetItemCatalogueMockResponse.json");
+
+			for (int i = 0; i <= 41; i++)
             {
-                string firstRelQuery = EndpointUtils.GetEncodedQueryUrl(ItemEndpoints.GetItemsQueryTemplate, i, "a", 1);
+				string catalogueRelQuery = EndpointUtils.GetEncodedQueryUrl(EndpointUtils.GrandExchange_GetItemCatalogueQueryTemplate, i);
+				string catalogueAbsQuery = $"{TestBaseUrl}{catalogueRelQuery}";
+				dict.Add(catalogueAbsQuery, catalogueResponse);
+
+				string firstRelQuery = EndpointUtils.GetEncodedQueryUrl(EndpointUtils.GrandExchange_GetItemsQueryTemplate, i, "a", 1);
                 string firstAbsQuery = $"{TestBaseUrl}{firstRelQuery}";
                 dict.Add(firstAbsQuery, mockResponse);
 
-                string secondRelQuery = EndpointUtils.GetEncodedQueryUrl(ItemEndpoints.GetItemsQueryTemplate, i, "a", 2);
+                string secondRelQuery = EndpointUtils.GetEncodedQueryUrl(EndpointUtils.GrandExchange_GetItemsQueryTemplate, i, "a", 2);
                 string secondAbsQuery = $"{TestBaseUrl}{secondRelQuery}";
                 dict.Add(secondAbsQuery, "{\"Total\": 12, \"Items\": []}");
 
-                string thirdRelQuery = EndpointUtils.GetEncodedQueryUrl(ItemEndpoints.GetItemsQueryTemplate, i, "b", 1);
+                string thirdRelQuery = EndpointUtils.GetEncodedQueryUrl(EndpointUtils.GrandExchange_GetItemsQueryTemplate, i, "b", 1);
                 string thirdAbsQuery = $"{TestBaseUrl}{thirdRelQuery}";
                 dict.Add(thirdAbsQuery, mockResponse);
             }
@@ -47,18 +53,15 @@ namespace RsApiClient.UnitTests.ItemApiTests
         }
 
         [Test]
-        public async Task GetAllItemsTest_Cancelled()
+        public void GetAllItemsTest_Cancelled()
         {
             // Arrange
-            RS3ItemApiClient client = new RS3ItemApiClient();
+            RS3ItemApiClient client = GetItemApiClient<RS3ItemApiClient>();
             CancellationTokenSource source = new CancellationTokenSource();
             source.Cancel();
 
-            // Act
-            var result = await client.GetAllItemsAsync().WithCancellation(source.Token).GetAsyncEnumerator().MoveNextAsync();
-
-            // Assert
-            Assert.IsFalse(result);
-        }
+			// Assert
+			Assert.ThrowsAsync<TaskCanceledException>(async () => await client.GetAllItemsAsync().WithCancellation(source.Token).GetAsyncEnumerator().MoveNextAsync());
+		}
     }
 }

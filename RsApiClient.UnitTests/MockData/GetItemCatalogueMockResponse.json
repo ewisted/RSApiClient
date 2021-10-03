@@ -1,0 +1,113 @@
+{
+    "types": [],
+    "alpha": [
+        {
+            "letter": "#",
+            "items": 23
+        },
+        {
+            "letter": "a",
+            "items": 334
+        },
+        {
+            "letter": "b",
+            "items": 468
+        },
+        {
+            "letter": "c",
+            "items": 168
+        },
+        {
+            "letter": "d",
+            "items": 238
+        },
+        {
+            "letter": "e",
+            "items": 119
+        },
+        {
+            "letter": "f",
+            "items": 81
+        },
+        {
+            "letter": "g",
+            "items": 214
+        },
+        {
+            "letter": "h",
+            "items": 56
+        },
+        {
+            "letter": "i",
+            "items": 112
+        },
+        {
+            "letter": "j",
+            "items": 40
+        },
+        {
+            "letter": "k",
+            "items": 40
+        },
+        {
+            "letter": "l",
+            "items": 78
+        },
+        {
+            "letter": "m",
+            "items": 280
+        },
+        {
+            "letter": "n",
+            "items": 22
+        },
+        {
+            "letter": "o",
+            "items": 104
+        },
+        {
+            "letter": "p",
+            "items": 152
+        },
+        {
+            "letter": "q",
+            "items": 1
+        },
+        {
+            "letter": "r",
+            "items": 289
+        },
+        {
+            "letter": "s",
+            "items": 469
+        },
+        {
+            "letter": "t",
+            "items": 242
+        },
+        {
+            "letter": "u",
+            "items": 51
+        },
+        {
+            "letter": "v",
+            "items": 43
+        },
+        {
+            "letter": "w",
+            "items": 123
+        },
+        {
+            "letter": "x",
+            "items": 4
+        },
+        {
+            "letter": "y",
+            "items": 31
+        },
+        {
+            "letter": "z",
+            "items": 52
+        }
+    ]
+}

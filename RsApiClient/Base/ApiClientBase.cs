@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Extensions.Options;
+using RSApiClient.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,47 +11,38 @@ namespace RSApiClient.Base
 {
     public abstract class ApiClientBase
     {
-        private readonly HttpClient _httpClient;
+        protected readonly HttpClient _httpClient;
+        protected readonly IOptions<RSClientOptions> _options;
 
-        protected ApiClientBase(HttpClient httpClient)
+        protected ApiClientBase(HttpClient httpClient, IOptions<RSClientOptions> options)
         {
             _httpClient = httpClient;
-            DelayBetweenRetries = TimeSpan.FromSeconds(3);
-            MaxRetries = 3;
+            _options = options;
         }
-
-        /// <summary>
-        /// Time to wait before retrying failed requests. Default is 3 seconds.
-        /// </summary>
-        public TimeSpan DelayBetweenRetries { get; set; }
-        /// <summary>
-        /// Maximum number of times to retry a failed request. Defaul is 3.
-        /// </summary>
-        public int MaxRetries { get; set; }
-
-        protected async Task<T> SendRequestAsync<T>(HttpMethod method, string queryString, JsonSerializerOptions? options = null, int attempt = 1)
+        protected async Task<T> SendRequestAsync<T>(HttpMethod method, string queryString, JsonSerializerOptions? options = null, CancellationToken cancellationToken = default, int attempt = 1)
         {
             try
             {
                 HttpRequestMessage request = new HttpRequestMessage(method, queryString);
 
-                HttpResponseMessage response = await _httpClient.SendAsync(request);
+                HttpResponseMessage response = await _httpClient.SendAsync(request, cancellationToken);
                 response.EnsureSuccessStatusCode();
 
-                T result = await JsonSerializer.DeserializeAsync<T>(response.Content.ReadAsStream()) ?? throw new JsonException("Deserialization result was null");
+                T result = await JsonSerializer.DeserializeAsync<T>(response.Content.ReadAsStream(), options, cancellationToken) ?? throw new JsonException("Deserialization result was null");
 
                 return result;
             }
             catch (Exception ex)
             {
-                if (attempt <= MaxRetries)
+                if (ex.GetType() == typeof(TaskCanceledException)) throw;
+                if (attempt <= _options.Value.MaxRetries)
                 {
-                    await Task.Delay(DelayBetweenRetries);
-                    return await SendRequestAsync<T>(method, queryString, options, attempt + 1);
+                    await Task.Delay(_options.Value.DelayBetweenRetries);
+                    return await SendRequestAsync<T>(method, queryString, options, cancellationToken, attempt + 1);
                 }
                 else
                 {
-                    throw new HttpRetryLimitExceededException(MaxRetries, method, $"{_httpClient.BaseAddress}{queryString}", ex);
+                    throw new HttpRetryLimitExceededException(_options.Value.MaxRetries, method, $"{_httpClient.BaseAddress}{queryString}", ex);
                 }
             }
         }

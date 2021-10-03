@@ -25,13 +25,18 @@ namespace RsApiClient.UnitTests.ItemApiTests
             }
             chars.Add('#');
 
+            var catalogueResponse = File.ReadAllText(@"MockData/GetItemCatalogueMockResponse.json");
+            string catalogueRelQuery = EndpointUtils.GetEncodedQueryUrl(EndpointUtils.GrandExchange_GetItemCatalogueQueryTemplate, (int)ItemCategory.Ammo);
+			string catalogueAbsQuery = $"{TestBaseUrl}{catalogueRelQuery}";
+            dict.Add(catalogueAbsQuery, catalogueResponse);
+
             for (int i = 0; i < 27; i++)
             {
-                string firstRelQuery = EndpointUtils.GetEncodedQueryUrl(ItemEndpoints.GetItemsQueryTemplate, 1, chars[i], 1);
+                string firstRelQuery = EndpointUtils.GetEncodedQueryUrl(EndpointUtils.GrandExchange_GetItemsQueryTemplate, 1, chars[i], 1);
                 string firstAbsQuery = $"{TestBaseUrl}{firstRelQuery}";
                 dict.Add(firstAbsQuery, mockResponse);
 
-                string secondRelQuery = EndpointUtils.GetEncodedQueryUrl(ItemEndpoints.GetItemsQueryTemplate, 1, chars[i], 2);
+                string secondRelQuery = EndpointUtils.GetEncodedQueryUrl(EndpointUtils.GrandExchange_GetItemsQueryTemplate, 1, chars[i], 2);
                 string secondAbsQuery = $"{TestBaseUrl}{secondRelQuery}";
                 dict.Add(secondAbsQuery, "{\"Total\": 324, \"Items\": []}");
             }
@@ -50,18 +55,15 @@ namespace RsApiClient.UnitTests.ItemApiTests
         }
 
         [Test]
-        public async Task GetAllItemsTest_Cancelled()
+        public void GetAllItemsTest_Cancelled()
         {
             // Arrange
-            OSRSItemApiClient client = new OSRSItemApiClient();
+            OSRSItemApiClient client = GetItemApiClient<OSRSItemApiClient>();
             CancellationTokenSource source = new CancellationTokenSource();
             source.Cancel();
 
-            // Act
-            var result = await client.GetAllItemsAsync().WithCancellation(source.Token).GetAsyncEnumerator().MoveNextAsync();
-
-            // Assert
-            Assert.IsFalse(result);
+			// Assert
+			Assert.ThrowsAsync<TaskCanceledException>(async () => await client.GetAllItemsAsync().WithCancellation(source.Token).GetAsyncEnumerator().MoveNextAsync());
         }
     }
 }

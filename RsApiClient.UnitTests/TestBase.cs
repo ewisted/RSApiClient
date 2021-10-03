@@ -8,6 +8,8 @@ using Moq.Protected;
 using System.Threading.Tasks;
 using System.Threading;
 using System.Collections.Generic;
+using Microsoft.Extensions.DependencyInjection;
+using RSApiClient.Extensions.DependencyInjection;
 
 namespace RsApiClient.UnitTests
 {
@@ -23,7 +25,7 @@ namespace RsApiClient.UnitTests
                 mockContentString = File.ReadAllText(mockDataPath);
             }
 
-            var httpMessageHandlerMock = new Mock<HttpMessageHandler>();
+            var httpMessageHandlerMock = new Mock<DelegatingHandler>();
             HttpResponseMessage mockResponse = new HttpResponseMessage(HttpStatusCode.OK)
             {
                 Content = new StringContent(mockContentString)
@@ -37,21 +39,32 @@ namespace RsApiClient.UnitTests
                 ItExpr.IsAny<CancellationToken>())
               .ReturnsAsync(mockResponse);
 
-            HttpClient mockHttpClient = new HttpClient(httpMessageHandlerMock.Object)
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddRSClients(options =>
             {
-                BaseAddress = new Uri(TestBaseUrl)
-            };
+                options.DelayBetweenRetries = TimeSpan.Zero;
+                options.BaseUrlOSRS = TestBaseUrl;
+                options.BaseUrlRS3 = TestBaseUrl;
+            }, httpMessageHandlerMock.Object);
+            
+            var services = serviceCollection.BuildServiceProvider();
+            var instance = services.GetRequiredService<T>();
 
-            T instance = (T)Activator.CreateInstance(typeof(T), mockHttpClient) ?? throw new ArgumentException();
+            //HttpClient mockHttpClient = new HttpClient(httpMessageHandlerMock.Object)
+            //{
+            //    BaseAddress = new Uri(TestBaseUrl)
+            //};
 
-            instance.DelayBetweenRetries = TimeSpan.Zero;
+            //T instance = (T)Activator.CreateInstance(typeof(T), mockHttpClient) ?? throw new ArgumentException();
+
+            //instance.DelayBetweenRetries = TimeSpan.Zero;
 
             return instance;
         }
 
         protected T GetItemApiClient<T>(IDictionary<string, string> queryResponses) where T : ItemApiClientBase
         {
-            var httpMessageHandlerMock = new Mock<HttpMessageHandler>();
+            var httpMessageHandlerMock = new Mock<DelegatingHandler>();
             foreach ((string query, string responseJson) in queryResponses)
             {
                 HttpResponseMessage mockResponse = new HttpResponseMessage(HttpStatusCode.OK)
@@ -68,15 +81,25 @@ namespace RsApiClient.UnitTests
                   .ReturnsAsync(mockResponse);
             }
 
-            HttpClient mockHttpClient = new HttpClient(httpMessageHandlerMock.Object)
+            var serviceCollection = new ServiceCollection();
+            serviceCollection.AddRSClients(options =>
             {
-                BaseAddress = new Uri("https://foo.bar/")
-            };
+                options.DelayBetweenRetries = TimeSpan.Zero;
+                options.BaseUrlOSRS = TestBaseUrl;
+                options.BaseUrlRS3 = TestBaseUrl;
+            }, httpMessageHandlerMock.Object);
+            var services = serviceCollection.BuildServiceProvider();
+            var instance = services.GetRequiredService<T>();
+
+            //HttpClient mockHttpClient = new HttpClient(httpMessageHandlerMock.Object)
+            //{
+            //    BaseAddress = new Uri("https://foo.bar/")
+            //};
 
 
-            T instance = (T)Activator.CreateInstance(typeof(T), mockHttpClient) ?? throw new ArgumentException();
+            //T instance = (T)Activator.CreateInstance(typeof(T), mockHttpClient) ?? throw new ArgumentException();
 
-            instance.DelayBetweenRetries = TimeSpan.Zero;
+            //instance.DelayBetweenRetries = TimeSpan.Zero;
 
             return instance;
         }

@@ -1,14 +1,13 @@
-﻿using RSApiClient.GrandExchange.Models;
+﻿using RSApiClient.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using RSApiClient.GrandExchange.Models;
 using System.Runtime.CompilerServices;
 
 namespace RSApiClient.GrandExchange
 {
     public class RS3ItemApiClient : ItemApiClientBase
     {
-        public const string DefaultBaseUrl = "https://secure.runescape.com/m=itemdb_rs/api/";
-
-        public RS3ItemApiClient() : base(DefaultBaseUrl) { }
-        public RS3ItemApiClient(HttpClient httpClient) : base(httpClient) { }
+        public RS3ItemApiClient(HttpClient httpClient, IOptions<RSClientOptions> options) : base(httpClient, options) { }
 
         public override async IAsyncEnumerable<ItemPage> GetAllItemsAsync([EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
@@ -16,6 +15,7 @@ namespace RSApiClient.GrandExchange
             int page = 1;
             foreach (ItemCategory category in Enum.GetValues(typeof(ItemCategory)).OfType<ItemCategory>())
             {
+                CategoryItemCatalogue catalogueInfo = await GetItemCatalogueAsync(category, cancellationToken);
                 int categoryOffset = 0;
                 foreach (char character in GetCharsForGetAllItemsQuery())
                 {
@@ -37,9 +37,10 @@ namespace RSApiClient.GrandExchange
                         break;
                     }
 
-                    for (int i = 0; true; i++)
+                    CharacterItemCount characterInfo = catalogueInfo.CharacterCounts.Single(c => c.Letter == character);
+                    for (int i = 0; categoryOffset < characterInfo.Count; i++)
                     {
-                        ItemPage result = await GetItemPageAsync(category, character, i + 1);
+                        ItemPage result = await GetItemPageAsync(category, character, i + 1, cancellationToken);
                         if (!result.Items.Any())
                         {
                             break;
