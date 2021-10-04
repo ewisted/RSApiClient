@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace RSApiClient.Models
+namespace RSApiClient.GrandExchange.Models
 {
     public class ItemPage
     {
@@ -17,10 +17,10 @@ namespace RSApiClient.Models
         public int Page { get; set; }
 
         [JsonIgnore]
-        public string Character { get; set; }
+        public char Character { get; set; }
 
         [JsonIgnore]
-        public int Category { get; set; }
+        public ItemCategory Category { get; set; }
 
         [JsonPropertyName("items")]
         public IEnumerable<Item> Items { get; set; }
@@ -31,8 +31,8 @@ namespace RSApiClient.Models
             Current = 0;
             Offset = 0;
             Page = 0;
-            Character = "";
-            Category = 1;
+            Character = 'a';
+            Category = ItemCategory.Ammo;
             Items = new List<Item>();
         }
     }

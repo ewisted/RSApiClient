@@ -5,10 +5,11 @@ VisualStudioVersion = 17.0.31717.71
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RSApiClient", "RsApiClient\RSApiClient.csproj", "{65537098-ED64-4680-B8E1-E19CF1A984F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RsApiClient.UnitTests", "RsApiClient.UnitTests\RsApiClient.UnitTests.csproj", "{E4B3421D-80AC-47C2-8B48-3A793AFC203C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RSApiClient.UnitTests", "RsApiClient.UnitTests\RSApiClient.UnitTests.csproj", "{E4B3421D-80AC-47C2-8B48-3A793AFC203C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{07E200BA-AFA9-4FFB-A40B-B9EE40310C37}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
 		.github\workflows\ci-build.yml = .github\workflows\ci-build.yml

@@ -1,6 +1,6 @@
 ﻿using NUnit.Framework;
 using RSApiClient.JsonConverters;
-using RSApiClient.Models;
+using RSApiClient.GrandExchange.Models;
 using System;
 using System.IO;
 using System.Text;
