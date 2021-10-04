@@ -5,6 +5,7 @@ using System.Text.Json;
 using RSApiClient.Base;
 using System.Linq;
 using RSApiClient.GrandExchange;
+using System;
 
 namespace RsApiClient.UnitTests.GrandExchangeTests
 {
@@ -55,14 +56,14 @@ namespace RsApiClient.UnitTests.GrandExchangeTests
         {
             // Arrange
             OSRSItemApiClient mockApiClient = GetApiClient<OSRSItemApiClient>();
+			DateTime startTimeStamp = DateTime.Now;
 
             // Act
-            var exception = Assert.ThrowsAsync<HttpRetryLimitExceededException>(async () => { await mockApiClient.GetItemByIdAsync(50); });
+            var exception = Assert.ThrowsAsync<JsonException>(async () => { await mockApiClient.GetItemByIdAsync(50); });
+			DateTime endTimeStamp = DateTime.Now;
 
             // Assert
-            Assert.IsNotNull(exception);
-            Assert.IsNotNull(exception?.InnerException);
-            Assert.AreEqual(typeof(JsonException), exception?.InnerException?.GetType());
+            Assert.Greater(endTimeStamp - startTimeStamp, TimeSpan.FromSeconds(3));
         }
     }
 }

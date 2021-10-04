@@ -43,8 +43,9 @@ namespace RsApiClient.UnitTests
             var serviceCollection = new ServiceCollection();
             serviceCollection.AddRSClients(options =>
             {
-                options.DelayBetweenRetries = TimeSpan.Zero;
                 options.BaseUrl = TestBaseUrl;
+				options.MaxRetries = 3;
+				options.RetryBackoffFunc = retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, 0.25));
             }, httpMessageHandlerMock.Object);
             
             var services = serviceCollection.BuildServiceProvider();
@@ -84,9 +85,10 @@ namespace RsApiClient.UnitTests
             var serviceCollection = new ServiceCollection();
             serviceCollection.AddRSClients(options =>
             {
-                options.DelayBetweenRetries = TimeSpan.Zero;
                 options.BaseUrl = TestBaseUrl;
-            }, httpMessageHandlerMock.Object);
+				options.MaxRetries = 3;
+				options.RetryBackoffFunc = retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, 0.25));
+			}, httpMessageHandlerMock.Object);
             var services = serviceCollection.BuildServiceProvider();
             var instance = services.GetRequiredService<T>();
 
