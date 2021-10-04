@@ -42,7 +42,7 @@ namespace RSApiClient.GrandExchange
 					}
 					else
 					{
-						yield break;
+						break;
 					}
 				}
 			}

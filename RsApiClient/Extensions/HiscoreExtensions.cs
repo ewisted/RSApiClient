@@ -41,8 +41,8 @@ namespace RSApiClient.Extensions
 
 		public static string GetNameString(this Enum value)
 		{
-			string stringValue = Enum.GetName(value.GetType(), value) ?? throw new ArgumentException($"Unable to get name for enum type: {value.GetType()} value: {value}");
-			stringValue = Regex.Replace(stringValue, "[a-z]([A-Z]|[0-9])", m => $"{m.Value[0]} {m.Value[1]}");
+			string stringValue = Enum.GetName(value.GetType(), value) ?? throw new ArgumentOutOfRangeException($"Unable to get name for enum type: {value.GetType()} value: {value}");
+			stringValue = Regex.Replace(stringValue, "[a-z]([A-Z]|[0-9])|[0-9][A-Z]", m => $"{m.Value[0]} {m.Value[1]}");
 			stringValue = stringValue.Replace("_", " - ");
 			return stringValue;
 		}

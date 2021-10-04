@@ -19,18 +19,6 @@ namespace RSApiClient.GrandExchange
                 int categoryOffset = 0;
                 foreach (char character in GetCharsForGetAllItemsQuery())
                 {
-                    if (cancellationToken != default)
-                    {
-                        try
-                        {
-                            cancellationToken.ThrowIfCancellationRequested();
-                        }
-                        catch (OperationCanceledException)
-                        {
-                            yield break;
-                        }
-                    }
-
                     if (currentCategoryFinished)
                     {
                         currentCategoryFinished = false;
