@@ -33,6 +33,12 @@
     <None Update="MockData\GetGraphDataForItemMockResponse.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Update="MockData\GetHiscoresLiteOSRSMockResponse.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="MockData\GetHiscoresLiteRS3MockResponse.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="MockData\GetItemByIdMockResponse.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

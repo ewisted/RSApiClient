@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace RSApiClient.Hiscores.Models
 {
-    public record Skill
+    public record Skill : RankingSnapshot
     {
-        public int Rank { get; init; }
         public int Level { get; init; }
         public int Experience { get; init; }
-        public Skill(int rank, int level, int experience) => (Rank, Level, Experience) = (rank, level, experience);
+		public Skill(string name, int rank, int level, int experience) : base(name, rank) => (Level, Experience) = (level, experience);
     }
 }

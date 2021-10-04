@@ -7,7 +7,7 @@ namespace RSApiClient.GrandExchange
 {
     public class RS3ItemApiClient : ItemApiClientBase
     {
-        public RS3ItemApiClient(HttpClient httpClient, IOptions<RSClientOptions> options) : base(httpClient, options) { }
+        public RS3ItemApiClient(HttpClient httpClient, IOptions<RSClientOptions> options) : base(httpClient, options, "itemdb_rs") { }
 
         public override async IAsyncEnumerable<ItemPage> GetAllItemsAsync([EnumeratorCancellation] CancellationToken cancellationToken = default)
         {

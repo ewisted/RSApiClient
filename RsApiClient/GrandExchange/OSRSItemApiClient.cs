@@ -8,7 +8,7 @@ namespace RSApiClient.GrandExchange
 {
     public class OSRSItemApiClient : ItemApiClientBase
     {
-        public OSRSItemApiClient(HttpClient httpClient, IOptions<RSClientOptions> options) : base(httpClient, options) { }
+        public OSRSItemApiClient(HttpClient httpClient, IOptions<RSClientOptions> options) : base(httpClient, options, "itemdb_oldschool") { }
 
         public override async IAsyncEnumerable<ItemPage> GetAllItemsAsync([EnumeratorCancellation] CancellationToken cancellationToken = default)
         {

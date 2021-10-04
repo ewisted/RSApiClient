@@ -6,7 +6,7 @@ using RSApiClient.Base;
 using System.Linq;
 using RSApiClient.GrandExchange;
 
-namespace RsApiClient.UnitTests.ItemApiTests
+namespace RsApiClient.UnitTests.GrandExchangeTests
 {
     public class ItemApiClientBaseTests : TestBase
     {
@@ -14,7 +14,7 @@ namespace RsApiClient.UnitTests.ItemApiTests
         public async Task GetItemByIdTest()
         {
             // Arrange
-            RS3ItemApiClient mockApiClient = GetItemApiClient<RS3ItemApiClient>(@"MockData/GetItemByIdMockResponse.json");
+            RS3ItemApiClient mockApiClient = GetApiClient<RS3ItemApiClient>(@"MockData/GetItemByIdMockResponse.json");
 
             // Act
             Item item = await mockApiClient.GetItemByIdAsync(50);
@@ -27,7 +27,7 @@ namespace RsApiClient.UnitTests.ItemApiTests
         public async Task GetItemCatalogueTest()
         {
             // Arrange
-            OSRSItemApiClient mockApiClient = GetItemApiClient<OSRSItemApiClient>(@"MockData/GetItemCatalogueMockResponse.json");
+            OSRSItemApiClient mockApiClient = GetApiClient<OSRSItemApiClient>(@"MockData/GetItemCatalogueMockResponse.json");
 
             // Act
             CategoryItemCatalogue catalogue = await mockApiClient.GetItemCatalogueAsync(ItemCategory.Ammo);
@@ -40,7 +40,7 @@ namespace RsApiClient.UnitTests.ItemApiTests
         public async Task GetGraphDataForItemTest()
         {
             // Arrange
-            RS3ItemApiClient mockApiClient = GetItemApiClient<RS3ItemApiClient>(@"MockData/GetGraphDataForItemMockResponse.json");
+            RS3ItemApiClient mockApiClient = GetApiClient<RS3ItemApiClient>(@"MockData/GetGraphDataForItemMockResponse.json");
 
             // Act
             ItemGraphData graphData = await mockApiClient.GetGraphDataForItem(4151);
@@ -54,7 +54,7 @@ namespace RsApiClient.UnitTests.ItemApiTests
         public void EmptyResponseContentTest()
         {
             // Arrange
-            OSRSItemApiClient mockApiClient = GetItemApiClient<OSRSItemApiClient>();
+            OSRSItemApiClient mockApiClient = GetApiClient<OSRSItemApiClient>();
 
             // Act
             var exception = Assert.ThrowsAsync<HttpRetryLimitExceededException>(async () => { await mockApiClient.GetItemByIdAsync(50); });

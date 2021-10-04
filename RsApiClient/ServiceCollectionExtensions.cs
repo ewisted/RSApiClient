@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using RSApiClient.GrandExchange;
+using RSApiClient.Hiscores;
 
 namespace RSApiClient.Extensions.DependencyInjection
 {
@@ -18,16 +19,21 @@ namespace RSApiClient.Extensions.DependencyInjection
             // Register lib services here...
             // services.AddScoped<ILibraryService, DefaultLibraryService>();
 
-            var builderOsrsApiClient = services.AddHttpClient<OSRSItemApiClient>("OSRSItemApiClient", (svc, opt) => opt.BaseAddress = new Uri(svc.GetRequiredService<IOptions<RSClientOptions>>().Value.BaseUrlOSRS));
+            var builderOsrsItemApiClient = services.AddHttpClient<OSRSItemApiClient>("OSRSItemApiClient", (svc, opt) => opt.BaseAddress = new Uri(svc.GetRequiredService<IOptions<RSClientOptions>>().Value.BaseUrl));
             if (messageHandler != null)
             {
-                builderOsrsApiClient.AddHttpMessageHandler(h => messageHandler);
+                builderOsrsItemApiClient.AddHttpMessageHandler(h => messageHandler);
             }
-            var builderRS3ApiClient = services.AddHttpClient<RS3ItemApiClient>("RS3ItemApiClient", (svc, opt) => opt.BaseAddress = new Uri(svc.GetRequiredService<IOptions<RSClientOptions>>().Value.BaseUrlRS3));
+            var builderRS3ItemApiClient = services.AddHttpClient<RS3ItemApiClient>("RS3ItemApiClient", (svc, opt) => opt.BaseAddress = new Uri(svc.GetRequiredService<IOptions<RSClientOptions>>().Value.BaseUrl));
             if (messageHandler != null)
             {
-                builderRS3ApiClient.AddHttpMessageHandler(h => messageHandler);
+                builderRS3ItemApiClient.AddHttpMessageHandler(h => messageHandler);
             }
+			var builderHiscoresApiClient = services.AddHttpClient<HiscoresApiClient>("HiscoresApiClient", (svc, opt) => opt.BaseAddress = new Uri(svc.GetRequiredService<IOptions<RSClientOptions>>().Value.BaseUrl));
+			if (messageHandler != null)
+			{
+				builderHiscoresApiClient.AddHttpMessageHandler(h => messageHandler);
+			}
 
             return services;
         }
@@ -35,8 +41,7 @@ namespace RSApiClient.Extensions.DependencyInjection
 
     public class RSClientOptions
     {
-        public string BaseUrlRS3 { get; set; } = "https://secure.runescape.com/m=itemdb_rs/api/";
-        public string BaseUrlOSRS { get; set; } = "https://secure.runescape.com/m=itemdb_oldschool/api/";
+        public string BaseUrl { get; set; } = "https://secure.runescape.com/";
         public TimeSpan DelayBetweenRetries { get; set; } = TimeSpan.FromSeconds(3);
         public int MaxRetries { get; set; } = 3;
     }

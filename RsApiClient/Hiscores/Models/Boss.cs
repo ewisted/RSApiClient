@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace RSApiClient.Hiscores.Models
 {
-    public record Boss
+    public record Boss : RankingSnapshot
     {
-        public int Rank { get; init; }
         public int Kills { get; init; }
-        public Boss(int rank, int kills) => (Rank, Kills) = (rank, kills);
+		public Boss(string name, int rank, int kills) : base(name, rank) => Kills = kills;
     }
 }

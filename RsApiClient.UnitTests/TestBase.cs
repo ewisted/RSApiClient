@@ -10,6 +10,7 @@ using System.Threading;
 using System.Collections.Generic;
 using Microsoft.Extensions.DependencyInjection;
 using RSApiClient.Extensions.DependencyInjection;
+using RSApiClient.Base;
 
 namespace RsApiClient.UnitTests
 {
@@ -18,7 +19,7 @@ namespace RsApiClient.UnitTests
     {
         protected const string TestBaseUrl = "https://foo.bar/";
 
-        protected T GetItemApiClient<T>(string? mockDataPath = null, string mockContentString = "") where T : ItemApiClientBase
+        protected T GetApiClient<T>(string? mockDataPath = null, string mockContentString = "") where T : ApiClientBase
         {
             if (!string.IsNullOrWhiteSpace(mockDataPath))
             {
@@ -43,8 +44,7 @@ namespace RsApiClient.UnitTests
             serviceCollection.AddRSClients(options =>
             {
                 options.DelayBetweenRetries = TimeSpan.Zero;
-                options.BaseUrlOSRS = TestBaseUrl;
-                options.BaseUrlRS3 = TestBaseUrl;
+                options.BaseUrl = TestBaseUrl;
             }, httpMessageHandlerMock.Object);
             
             var services = serviceCollection.BuildServiceProvider();
@@ -62,7 +62,7 @@ namespace RsApiClient.UnitTests
             return instance;
         }
 
-        protected T GetItemApiClient<T>(IDictionary<string, string> queryResponses) where T : ItemApiClientBase
+        protected T GetApiClient<T>(IDictionary<string, string> queryResponses) where T : ApiClientBase
         {
             var httpMessageHandlerMock = new Mock<DelegatingHandler>();
             foreach ((string query, string responseJson) in queryResponses)
@@ -85,8 +85,7 @@ namespace RsApiClient.UnitTests
             serviceCollection.AddRSClients(options =>
             {
                 options.DelayBetweenRetries = TimeSpan.Zero;
-                options.BaseUrlOSRS = TestBaseUrl;
-                options.BaseUrlRS3 = TestBaseUrl;
+                options.BaseUrl = TestBaseUrl;
             }, httpMessageHandlerMock.Object);
             var services = serviceCollection.BuildServiceProvider();
             var instance = services.GetRequiredService<T>();

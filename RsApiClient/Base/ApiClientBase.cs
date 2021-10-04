@@ -14,12 +14,16 @@ namespace RSApiClient.Base
         protected readonly HttpClient _httpClient;
         protected readonly IOptions<RSClientOptions> _options;
 
-        protected ApiClientBase(HttpClient httpClient, IOptions<RSClientOptions> options)
+        protected ApiClientBase(HttpClient httpClient, IOptions<RSClientOptions> options, string moduleToken)
         {
             _httpClient = httpClient;
             _options = options;
+			ModuleToken = moduleToken;
         }
-        protected async Task<T> SendRequestAsync<T>(HttpMethod method, string queryString, JsonSerializerOptions? options = null, CancellationToken cancellationToken = default, int attempt = 1)
+
+		protected string ModuleToken { get; set; }
+
+		protected async Task<T> SendRequestAsync<T>(HttpMethod method, string queryString, JsonSerializerOptions? options = null, CancellationToken cancellationToken = default, int attempt = 1)
         {
             try
             {

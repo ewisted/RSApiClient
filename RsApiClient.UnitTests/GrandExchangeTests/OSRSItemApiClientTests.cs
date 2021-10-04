@@ -7,7 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using RSApiClient.Endpoints;
 
-namespace RsApiClient.UnitTests.ItemApiTests
+namespace RsApiClient.UnitTests.GrandExchangeTests
 {
     public class OSRSItemApiClientTests : TestBase
     {
@@ -26,22 +26,22 @@ namespace RsApiClient.UnitTests.ItemApiTests
             chars.Add('#');
 
             var catalogueResponse = File.ReadAllText(@"MockData/GetItemCatalogueMockResponse.json");
-            string catalogueRelQuery = EndpointUtils.GetEncodedQueryUrl(EndpointUtils.GrandExchange_GetItemCatalogueQueryTemplate, (int)ItemCategory.Ammo);
+            string catalogueRelQuery = EndpointUtils.GetEncodedQueryUrl(EndpointUtils.GrandExchange_GetItemCatalogueQueryTemplate, "itemdb_oldschool", (int)ItemCategory.Ammo);
 			string catalogueAbsQuery = $"{TestBaseUrl}{catalogueRelQuery}";
             dict.Add(catalogueAbsQuery, catalogueResponse);
 
             for (int i = 0; i < 27; i++)
             {
-                string firstRelQuery = EndpointUtils.GetEncodedQueryUrl(EndpointUtils.GrandExchange_GetItemsQueryTemplate, 1, chars[i], 1);
+                string firstRelQuery = EndpointUtils.GetEncodedQueryUrl(EndpointUtils.GrandExchange_GetItemsQueryTemplate, "itemdb_oldschool", 1, chars[i], 1);
                 string firstAbsQuery = $"{TestBaseUrl}{firstRelQuery}";
                 dict.Add(firstAbsQuery, mockResponse);
 
-                string secondRelQuery = EndpointUtils.GetEncodedQueryUrl(EndpointUtils.GrandExchange_GetItemsQueryTemplate, 1, chars[i], 2);
+                string secondRelQuery = EndpointUtils.GetEncodedQueryUrl(EndpointUtils.GrandExchange_GetItemsQueryTemplate, "itemdb_oldschool", 1, chars[i], 2);
                 string secondAbsQuery = $"{TestBaseUrl}{secondRelQuery}";
                 dict.Add(secondAbsQuery, "{\"Total\": 324, \"Items\": []}");
             }
 
-            var client = GetItemApiClient<OSRSItemApiClient>(dict);
+            var client = GetApiClient<OSRSItemApiClient>(dict);
 
             // Act
             List<ItemPage> pages = new List<ItemPage>();
@@ -58,7 +58,7 @@ namespace RsApiClient.UnitTests.ItemApiTests
         public void GetAllItemsTest_Cancelled()
         {
             // Arrange
-            OSRSItemApiClient client = GetItemApiClient<OSRSItemApiClient>();
+            OSRSItemApiClient client = GetApiClient<OSRSItemApiClient>();
             CancellationTokenSource source = new CancellationTokenSource();
             source.Cancel();
 

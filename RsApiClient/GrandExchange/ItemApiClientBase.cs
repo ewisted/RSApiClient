@@ -11,18 +11,18 @@ namespace RSApiClient.GrandExchange
 {
     public abstract class ItemApiClientBase : ApiClientBase, IItemApiClient
     {
-        protected ItemApiClientBase(HttpClient httpClient, IOptions<RSClientOptions> options) : base (httpClient, options) { }
+        protected ItemApiClientBase(HttpClient httpClient, IOptions<RSClientOptions> options, string moduleToken) : base (httpClient, options, moduleToken) { }
 
         public async Task<Item> GetItemByIdAsync(int itemId, CancellationToken cancellationToken = default)
         {
-            string query = EndpointUtils.GetEncodedQueryUrl(EndpointUtils.GrandExchange_GetItemByIdQueryTemplate, itemId);
+            string query = EndpointUtils.GetEncodedQueryUrl(EndpointUtils.GrandExchange_GetItemByIdQueryTemplate, ModuleToken, itemId);
             ItemResult result = await SendRequestAsync<ItemResult>(HttpMethod.Get, query, null, cancellationToken);
             return result.Item;
         }
 
         public async Task<CategoryItemCatalogue> GetItemCatalogueAsync(ItemCategory category, CancellationToken cancellationToken = default)
         {
-            string query = EndpointUtils.GetEncodedQueryUrl(EndpointUtils.GrandExchange_GetItemCatalogueQueryTemplate, (int)category);
+            string query = EndpointUtils.GetEncodedQueryUrl(EndpointUtils.GrandExchange_GetItemCatalogueQueryTemplate, ModuleToken, (int)category);
             CategoryItemCatalogue result = await SendRequestAsync<CategoryItemCatalogue>(HttpMethod.Get, query, null, cancellationToken);
             return result;
         }
@@ -31,7 +31,7 @@ namespace RSApiClient.GrandExchange
 
         public async Task<ItemPage> GetItemPageAsync(ItemCategory category, char character, int page, CancellationToken cancellationToken = default)
         {
-            string query = EndpointUtils.GetEncodedQueryUrl(EndpointUtils.GrandExchange_GetItemsQueryTemplate, (int)category, character, page);
+            string query = EndpointUtils.GetEncodedQueryUrl(EndpointUtils.GrandExchange_GetItemsQueryTemplate, ModuleToken, (int)category, character, page);
             ItemPage result = await SendRequestAsync<ItemPage>(HttpMethod.Get, query, null, cancellationToken);
             result.Current = result.Items.Count();
             result.Category = category;
@@ -45,7 +45,7 @@ namespace RSApiClient.GrandExchange
             JsonSerializerOptions options = new JsonSerializerOptions();
             options.Converters.Add(new GraphDataJsonConverter());
 
-            string query = EndpointUtils.GetEncodedQueryUrl(EndpointUtils.GrandExchange_GetItemGraphDataQueryTemplate, itemId);
+            string query = EndpointUtils.GetEncodedQueryUrl(EndpointUtils.GrandExchange_GetItemGraphDataQueryTemplate, ModuleToken, itemId);
             ItemGraphData result = await SendRequestAsync<ItemGraphData>(HttpMethod.Get, query, options, cancellationToken);
             return result;
         }
