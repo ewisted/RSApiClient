@@ -11,8 +11,13 @@ namespace RSApiClient.Extensions.DependencyInjection
     {
         public static IServiceCollection AddRSClients(
           this IServiceCollection services,
-          Action<RSClientOptions> configureOptions, DelegatingHandler? messageHandler)
+          Action<RSClientOptions>? configureOptions = null, DelegatingHandler? messageHandler = null)
         {
+			if (configureOptions == null)
+			{
+				configureOptions = options => { };
+			}
+
             services.Configure(configureOptions).PostConfigure<RSClientOptions>(options =>
             {
                 // Validate options are valid here. Treat this like a 'unit test' of the options.
