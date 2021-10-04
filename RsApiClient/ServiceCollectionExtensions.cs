@@ -72,7 +72,7 @@ namespace RSApiClient.Extensions.DependencyInjection
 			return HttpPolicyExtensions
 				.HandleTransientHttpError()
 				.OrResult(msg => msg.StatusCode == System.Net.HttpStatusCode.NotFound)
-				.OrResult(msg => msg.Content.ReadAsStream().Length == 0)
+				.OrResult(msg => string.IsNullOrWhiteSpace(msg.Content.ReadAsStringAsync().GetAwaiter().GetResult()))
 				.WaitAndRetryAsync(maxRetries, retryBackoffFunc);
 		}
 	}
