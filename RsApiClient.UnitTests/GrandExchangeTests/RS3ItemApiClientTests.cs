@@ -39,7 +39,7 @@ namespace RsApiClient.UnitTests.GrandExchangeTests
                 dict.Add(thirdAbsQuery, mockResponse);
             }
 
-            var client = GetApiClient<RS3ItemApiClient>(dict);
+            var client = GetApiClient<IRS3ItemApiClient>(dict);
 
             // Act
             List<ItemPage> pages = new List<ItemPage>();
@@ -56,7 +56,7 @@ namespace RsApiClient.UnitTests.GrandExchangeTests
         public void GetAllItemsTest_Cancelled()
         {
             // Arrange
-            RS3ItemApiClient client = GetApiClient<RS3ItemApiClient>();
+            IRS3ItemApiClient client = GetApiClient<IRS3ItemApiClient>();
             CancellationTokenSource source = new CancellationTokenSource();
             source.Cancel();
 

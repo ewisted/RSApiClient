@@ -19,7 +19,7 @@ namespace RsApiClient.UnitTests
     {
         protected const string TestBaseUrl = "https://foo.bar/";
 
-        protected T GetApiClient<T>(string? mockDataPath = null, string mockContentString = "") where T : ApiClientBase
+        protected T GetApiClient<T>(string? mockDataPath = null, string mockContentString = "") where T : notnull
         {
             if (!string.IsNullOrWhiteSpace(mockDataPath))
             {
@@ -63,7 +63,7 @@ namespace RsApiClient.UnitTests
             return instance;
         }
 
-        protected T GetApiClient<T>(IDictionary<string, string> queryResponses) where T : ApiClientBase
+        protected T GetApiClient<T>(IDictionary<string, string> queryResponses) where T : notnull
         {
             var httpMessageHandlerMock = new Mock<DelegatingHandler>();
             foreach ((string query, string responseJson) in queryResponses)

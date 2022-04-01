@@ -30,14 +30,7 @@ namespace RSApiClient.Base
 			HttpResponseMessage response = await _httpClient.SendAsync(request, cancellationToken);
 			response.EnsureSuccessStatusCode();
 
-			string resString = await response.Content.ReadAsStringAsync();
-			if (string.IsNullOrWhiteSpace(resString))
-			{
-				Console.WriteLine("We gotem");
-			}
-			T result = JsonSerializer.Deserialize<T>(resString) ?? throw new JsonException("Deserialization result was null");
-
-			//T result = await JsonSerializer.DeserializeAsync<T>(response.Content.ReadAsStream(), options, cancellationToken) ?? throw new JsonException("Deserialization result was null");
+			T result = await JsonSerializer.DeserializeAsync<T>(response.Content.ReadAsStream(), options, cancellationToken) ?? throw new JsonException("Deserialization result was null");
 
 			return result;
 		}

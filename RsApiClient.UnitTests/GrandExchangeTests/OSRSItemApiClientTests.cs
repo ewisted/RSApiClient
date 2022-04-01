@@ -41,7 +41,7 @@ namespace RsApiClient.UnitTests.GrandExchangeTests
                 dict.Add(secondAbsQuery, "{\"Total\": 324, \"Items\": []}");
             }
 
-            var client = GetApiClient<OSRSItemApiClient>(dict);
+            var client = GetApiClient<IOSRSItemApiClient>(dict);
 
             // Act
             List<ItemPage> pages = new List<ItemPage>();
@@ -58,7 +58,7 @@ namespace RsApiClient.UnitTests.GrandExchangeTests
         public void GetAllItemsTest_Cancelled()
         {
             // Arrange
-            OSRSItemApiClient client = GetApiClient<OSRSItemApiClient>();
+            IOSRSItemApiClient client = GetApiClient<IOSRSItemApiClient>();
             CancellationTokenSource source = new CancellationTokenSource();
             source.Cancel();
 

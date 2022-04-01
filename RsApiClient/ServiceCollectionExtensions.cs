@@ -25,7 +25,7 @@ namespace RSApiClient.Extensions.DependencyInjection
 
             // Register lib services here...
             // services.AddScoped<ILibraryService, DefaultLibraryService>();
-            var builderOsrsItemApiClient = services.AddHttpClient<OSRSItemApiClient>("OSRSItemApiClient", (svc, opt) => opt.BaseAddress = new Uri(svc.GetRequiredService<IOptions<RSClientOptions>>().Value.BaseUrl))
+            var builderOsrsItemApiClient = services.AddHttpClient<IOSRSItemApiClient, OSRSItemApiClient>("OSRSItemApiClient", (svc, opt) => opt.BaseAddress = new Uri(svc.GetRequiredService<IOptions<RSClientOptions>>().Value.BaseUrl))
 				.SetHandlerLifetime(TimeSpan.FromMinutes(5))
 				.AddPolicyHandler((svc, m) =>
 				{
@@ -38,7 +38,7 @@ namespace RSApiClient.Extensions.DependencyInjection
                 builderOsrsItemApiClient.AddHttpMessageHandler(h => messageHandler);
             }
 
-            var builderRS3ItemApiClient = services.AddHttpClient<RS3ItemApiClient>("RS3ItemApiClient", (svc, opt) => opt.BaseAddress = new Uri(svc.GetRequiredService<IOptions<RSClientOptions>>().Value.BaseUrl))
+            var builderRS3ItemApiClient = services.AddHttpClient<IRS3ItemApiClient, RS3ItemApiClient>("RS3ItemApiClient", (svc, opt) => opt.BaseAddress = new Uri(svc.GetRequiredService<IOptions<RSClientOptions>>().Value.BaseUrl))
 				.SetHandlerLifetime(TimeSpan.FromMinutes(5))
 				.AddPolicyHandler((svc, m) =>
 				{
@@ -51,7 +51,7 @@ namespace RSApiClient.Extensions.DependencyInjection
                 builderRS3ItemApiClient.AddHttpMessageHandler(h => messageHandler);
             }
 
-			var builderHiscoresApiClient = services.AddHttpClient<HiscoresApiClient>("HiscoresApiClient", (svc, opt) => opt.BaseAddress = new Uri(svc.GetRequiredService<IOptions<RSClientOptions>>().Value.BaseUrl))
+			var builderHiscoresApiClient = services.AddHttpClient<IHiscoresApiClient, HiscoresApiClient>("HiscoresApiClient", (svc, opt) => opt.BaseAddress = new Uri(svc.GetRequiredService<IOptions<RSClientOptions>>().Value.BaseUrl))
 				.SetHandlerLifetime(TimeSpan.FromMinutes(5))
 				.AddPolicyHandler((svc, m) =>
 				{

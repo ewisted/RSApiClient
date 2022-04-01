@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 
 namespace RSApiClient.GrandExchange
 {
-    public class RS3ItemApiClient : ItemApiClientBase
+    public class RS3ItemApiClient : ItemApiClientBase, IRS3ItemApiClient
     {
         public RS3ItemApiClient(HttpClient httpClient, IOptions<RSClientOptions> options) : base(httpClient, options, "itemdb_rs") { }
 

@@ -85,7 +85,7 @@ namespace RSApiClient.IntegrationTests.GrandExchangeTests
 			Console.WriteLine($"{finishTimeStamp.ToString("yyyy-MM-dd HH:mm:ss.fff")} \tFinished refreshing item metadata in {(finishTimeStamp - startTimeStamp).ToString(@"hh\:mm\:ss", new CultureInfo("en-US"))} (hh:mm:ss)");
 
 			// Assert
-			Assert.AreEqual(3833, items.Count);
+			Assert.GreaterOrEqual(3890, items.Count);
 		}
 	}
 #pragma warning restore CS8602 // Dereference of a possibly null reference.

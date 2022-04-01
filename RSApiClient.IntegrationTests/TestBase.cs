@@ -8,9 +8,9 @@ namespace RSApiClient.IntegrationTests
 {
     public class TestBase
     {
-		protected OSRSItemApiClient? _osrsItemApiClient;
-		protected RS3ItemApiClient? _rs3ItemApiClient;
-		protected HiscoresApiClient? _hiscoresApiClient;
+		protected IOSRSItemApiClient? _osrsItemApiClient;
+		protected IRS3ItemApiClient? _rs3ItemApiClient;
+		protected IHiscoresApiClient? _hiscoresApiClient;
 
 		[SetUp]
 		public void SetupApiClients()
@@ -18,9 +18,9 @@ namespace RSApiClient.IntegrationTests
 			var serviceCollection = new ServiceCollection();
 			serviceCollection.AddRSClients();
 			var services = serviceCollection.BuildServiceProvider();
-			_osrsItemApiClient = services.GetRequiredService<OSRSItemApiClient>();
-			_rs3ItemApiClient = services.GetRequiredService<RS3ItemApiClient>();
-			_hiscoresApiClient = services.GetRequiredService<HiscoresApiClient>();
+			_osrsItemApiClient = services.GetRequiredService<IOSRSItemApiClient>();
+			_rs3ItemApiClient = services.GetRequiredService<IRS3ItemApiClient>();
+			_hiscoresApiClient = services.GetRequiredService<IHiscoresApiClient>();
 		}
     }
 }

@@ -15,7 +15,7 @@ namespace RsApiClient.UnitTests.GrandExchangeTests
         public async Task GetItemByIdTest()
         {
             // Arrange
-            RS3ItemApiClient mockApiClient = GetApiClient<RS3ItemApiClient>(@"MockData/GetItemByIdMockResponse.json");
+            IRS3ItemApiClient mockApiClient = GetApiClient<IRS3ItemApiClient>(@"MockData/GetItemByIdMockResponse.json");
 
             // Act
             Item item = await mockApiClient.GetItemByIdAsync(50);
@@ -28,7 +28,7 @@ namespace RsApiClient.UnitTests.GrandExchangeTests
         public async Task GetItemCatalogueTest()
         {
             // Arrange
-            OSRSItemApiClient mockApiClient = GetApiClient<OSRSItemApiClient>(@"MockData/GetItemCatalogueMockResponse.json");
+            IOSRSItemApiClient mockApiClient = GetApiClient<IOSRSItemApiClient>(@"MockData/GetItemCatalogueMockResponse.json");
 
             // Act
             CategoryItemCatalogue catalogue = await mockApiClient.GetItemCatalogueAsync(ItemCategory.Ammo);
@@ -41,7 +41,7 @@ namespace RsApiClient.UnitTests.GrandExchangeTests
         public async Task GetGraphDataForItemTest()
         {
             // Arrange
-            RS3ItemApiClient mockApiClient = GetApiClient<RS3ItemApiClient>(@"MockData/GetGraphDataForItemMockResponse.json");
+            IRS3ItemApiClient mockApiClient = GetApiClient<IRS3ItemApiClient>(@"MockData/GetGraphDataForItemMockResponse.json");
 
             // Act
             ItemGraphData graphData = await mockApiClient.GetGraphDataForItem(4151);
@@ -55,7 +55,7 @@ namespace RsApiClient.UnitTests.GrandExchangeTests
         public void EmptyResponseContentTest()
         {
             // Arrange
-            OSRSItemApiClient mockApiClient = GetApiClient<OSRSItemApiClient>();
+            IOSRSItemApiClient mockApiClient = GetApiClient<IOSRSItemApiClient>();
 			DateTime startTimeStamp = DateTime.Now;
 
             // Act

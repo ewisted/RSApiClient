@@ -16,7 +16,7 @@ namespace RSApiClient.UnitTests.HiscoresTests
 		public async Task GetHiscoresLiteOSRSTest()
 		{
 			// Arrange
-			HiscoresApiClient mockApiClient = GetApiClient<HiscoresApiClient>(@"MockData/GetHiscoresLiteOSRSMockResponse.csv");
+			IHiscoresApiClient mockApiClient = GetApiClient<IHiscoresApiClient>(@"MockData/GetHiscoresLiteOSRSMockResponse.csv");
 			HiscoreType type = HiscoreType.OSNormal;
 			string playerName = "foo";
 
@@ -35,7 +35,7 @@ namespace RSApiClient.UnitTests.HiscoresTests
 		public async Task GetHiscoresLiteRS3Test()
 		{
 			// Arrange
-			HiscoresApiClient mockApiClient = GetApiClient<HiscoresApiClient>(@"MockData/GetHiscoresLiteRS3MockResponse.csv");
+			IHiscoresApiClient mockApiClient = GetApiClient<IHiscoresApiClient>(@"MockData/GetHiscoresLiteRS3MockResponse.csv");
 			HiscoreType type = HiscoreType.RS3Normal;
 			string playerName = "foo";
 

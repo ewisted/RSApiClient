@@ -12,7 +12,7 @@ using RSApiClient.Extensions;
 
 namespace RSApiClient.Hiscores
 {
-    public class HiscoresApiClient : ApiClientBase
+    public class HiscoresApiClient : ApiClientBase, IHiscoresApiClient
     {
         public HiscoresApiClient(HttpClient httpClient, IOptions<RSClientOptions> options) : base(httpClient, options, "") { }
 

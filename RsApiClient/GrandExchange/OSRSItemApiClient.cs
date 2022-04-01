@@ -6,7 +6,7 @@ using RSApiClient.Extensions.DependencyInjection;
 
 namespace RSApiClient.GrandExchange
 {
-    public class OSRSItemApiClient : ItemApiClientBase
+    public class OSRSItemApiClient : ItemApiClientBase, IOSRSItemApiClient
     {
         public OSRSItemApiClient(HttpClient httpClient, IOptions<RSClientOptions> options) : base(httpClient, options, "itemdb_oldschool") { }
 
