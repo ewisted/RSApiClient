@@ -61,7 +61,7 @@ jobs:
         run: mv ${{ github.workspace }}/RsApiClient.UnitTests/TestResults/*/coverage.info ${{ github.workspace }}/RsApiClient.UnitTests/TestResults
 
       - name: Upload Test Results
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
         with:
           name: testcoverage
           path: ${{ github.workspace }}/RsApiClient.UnitTests/TestResults
@@ -81,7 +81,7 @@ jobs:
           echo $VERSION
           $VERSION
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v4
         with:
           name: packages
           path: output
