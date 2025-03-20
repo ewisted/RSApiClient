@@ -34,7 +34,7 @@ jobs:
         env:
           NUGET_AUTH_TOKEN: ${{secrets.MYGET_TOKEN}}
 
-      - uses: actions/cache@v1
+      - uses: actions/cache@v4
         with:
           path: ${{ github.workspace }}/.nuget/packages
           key: ${{ runner.os }}-nuget-cache2-${{ hashFiles('**/packages.lock.json') }}
