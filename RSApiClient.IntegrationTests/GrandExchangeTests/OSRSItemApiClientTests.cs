@@ -57,7 +57,7 @@ namespace RSApiClient.IntegrationTests.GrandExchangeTests
 		public async Task GetGraphDataForItemTest()
 		{
 			// Arrange
-			int itemId = 50;
+			int itemId = 20997;
 
 			// Act
 			var graphData = await _osrsItemApiClient.GetGraphDataForItem(itemId);
@@ -85,7 +85,7 @@ namespace RSApiClient.IntegrationTests.GrandExchangeTests
 			Console.WriteLine($"{finishTimeStamp.ToString("yyyy-MM-dd HH:mm:ss.fff")} \tFinished refreshing item metadata in {(finishTimeStamp - startTimeStamp).ToString(@"hh\:mm\:ss", new CultureInfo("en-US"))} (hh:mm:ss)");
 
 			// Assert
-			Assert.GreaterOrEqual(3890, items.Count);
+			Assert.GreaterOrEqual(items.Count, 3890);
 		}
 	}
 #pragma warning restore CS8602 // Dereference of a possibly null reference.
